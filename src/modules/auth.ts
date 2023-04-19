@@ -1,6 +1,11 @@
 import jwt, { Secret } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { Request, RequestHandler } from 'express';
+import { User as PrismaUser } from '@prisma/client';
+
+interface User extends Omit<PrismaUser, 'username'> {
+  name: string;
+}
 
 interface User {
   id: string;
