@@ -3,18 +3,15 @@ import bcrypt from 'bcrypt';
 import { Request, RequestHandler } from 'express';
 import { User as PrismaUser } from '@prisma/client';
 
-interface User extends Omit<PrismaUser, 'username'> {
+interface User extends Omit<PrismaUser, 'username' | 'id'> {
   name: string;
-}
-
-interface User {
   id: string;
-  name: string;
 }
 
 interface AuthenticatedRequest extends Request {
   user: User;
 }
+
 // Compare the given plaintext password with the stored hashed password
 export const comparePasswords = (password: string, hash: string): Promise<boolean> => {
   return bcrypt.compare(password, hash);
