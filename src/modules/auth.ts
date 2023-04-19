@@ -64,7 +64,7 @@ export const protect: RequestHandler = (req: AuthenticatedRequest, res, next) =>
     next();
   } catch (e) {
     // If an error occurs during token verification, return an unauthorized error
-    console.error(e);
+    console.error(e.message);
     res.status(401);
     res.json({ message: 'not valid token' });
     return;
