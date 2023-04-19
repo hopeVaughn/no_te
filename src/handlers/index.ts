@@ -1,4 +1,4 @@
-import { createNewUser, signin, } from "./user";
+import { createNewUser, signin, getAllUsers, getUserById } from "./user";
 import { addAlert, getAllAlerts, getAlertById, acknowledgeAlert } from "./alerts"
 import { addCamera, getAllCameras, getCameraById, updateCamera, deleteCamera } from './camera'
 
@@ -14,4 +14,6 @@ export {
   getCameraById,
   updateCamera,
   deleteCamera,
+  getAllUsers,
+  getUserById
 }

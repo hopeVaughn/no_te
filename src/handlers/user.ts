@@ -50,3 +50,11 @@ export const signin: RequestHandler = async (req, res) => {
   const token = createJWT(user as User);
   res.json({ token });
 };
+
+export const getAllUsers: RequestHandler = async (req, res) => {
+  //
+}
+
+export const getUserById: RequestHandler = async (req, res) => {
+  //
+}

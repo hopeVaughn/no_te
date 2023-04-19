@@ -1,15 +1,41 @@
 import { Router } from "express";
+import {
+  getAllUsers,
+  getUserById,
+  getAllCameras,
+  addCamera,
+  getCameraById,
+  updateCamera,
+  deleteCamera,
+  getAllAlerts,
+  addAlert,
+  getAlertById,
+  acknowledgeAlert
+} from './handlers/index';
+
 const router = Router();
 
 /*
-* Todos
+ * Users
  */
-router.get('/todo', (req, res) => {
-  res.json({ message: 'heya pal!' })
-})
-router.get('/todo/:id', () => { })
-router.put('/todo/:id', () => { })
-router.post('/todo', () => { })
-router.delete('/todo/:id', () => { })
+router.get('/users', getAllUsers);
+router.get('/users/:id', getUserById);
 
-export default router
+/*
+ * Cameras
+ */
+router.get('/cameras', getAllCameras);
+router.post('/cameras', addCamera);
+router.get('/cameras/:id', getCameraById);
+router.put('/cameras/:id', updateCamera);
+router.delete('/cameras/:id', deleteCamera);
+
+/*
+ * Alerts
+ */
+router.get('/alerts', getAllAlerts);
+router.post('/alerts', addAlert);
+router.get('/alerts/:id', getAlertById);
+router.put('/alerts/:id/acknowledge', acknowledgeAlert);
+
+export default router;
