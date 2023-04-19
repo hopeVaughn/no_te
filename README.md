@@ -14,7 +14,7 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 - [Contributing](#contributing)
 - [License](#license)
 
-## Features
+## `Features`
 
 1. Login functionality with user
 2. Allow operators to view simulated past footage from each camera
@@ -24,15 +24,15 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 
 ## Database Design Concept
 
-### Key Entities 
+### `Key Entities` 
 
 1. Users
 2. Cameras
 3. Alerts
 
-### Attributes and Relationships
+### `Attributes and Relationships`
 
-1. Users:
+1. `Users`:
 
 * id (Primary key)
 * username (Unique)
@@ -42,7 +42,7 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 * last_name
 * role (Admin, Operator)
 
-1. Cameras:
+1. `Cameras`:
 
 * id (Primary key)
 * name (Unique)
@@ -52,7 +52,7 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 * created_at (Timestamp)
 * updated_at (Timestamp)
 
-3. Alerts:
+3. `Alerts`:
 
 * id (Primary key)
 * camera_id (Foreign key referencing Cameras)
@@ -62,19 +62,19 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 * acknowledged_by (Foreign key referencing Users)
 * acknowledged_at (Timestamp)
 
-### Relationships
+### `Relationships`
 
 * One Camera can have many Alerts (One-to-Many relationship between Cameras and Alerts)
 
 * One User can acknowledge many Alerts (One-to-Many relationship between Users and Alerts)
 
-## Requirements
+## `Requirements`
 
 1. Node.js v18.0.0 or later
 2. PostgreSQL v14.0 or later
 3. Prisma v4.11.0 or later
 
-## Getting Started
+## `Getting Started`
 
 To set up the project locally, follow these steps:
 
@@ -114,18 +114,18 @@ To set up the project locally, follow these steps:
 
 The application will be available at `http://localhost:3000`.
 
-## Running Tests
+## `Running Tests`
 
   * To run the tests for the backend, run the following command in the project root:
 
   - npm test
 
   
-## Deployment
+## `Deployment`
 
 Deployment instructions will depend on your chosen hosting provider. Please refer to their specific documentation for deploying Node.js and React applications.
 
-## Built With
+## `Built With`
 
 - [Node.js](https://nodejs.org/) - Backend runtime
 - [Express](https://expressjs.com/) - Backend web framework
@@ -135,10 +135,10 @@ Deployment instructions will depend on your chosen hosting provider. Please refe
 - [React](https://react.dev/) - Frontend library
 - [Tailwind CSS](https://tailwindcss.com/) - CSS framework
 
-## Contributing
+## `Contributing`
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
 
-## License
+## `License`
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
