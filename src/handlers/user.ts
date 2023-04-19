@@ -1,11 +1,6 @@
 import { RequestHandler } from 'express';
 import prisma from '../db';
-import { comparePasswords, createJWT, hashPassword } from '../modules/auth';
-import { User } from '@prisma/client';
-
-interface UserType extends User {
-  name: string;
-}
+import { comparePasswords, createJWT, hashPassword, User } from '../modules/auth';
 
 // Request handler to create a new user
 export const createNewUser: RequestHandler = async (req, res) => {
@@ -14,11 +9,15 @@ export const createNewUser: RequestHandler = async (req, res) => {
     data: {
       username: req.body.username,
       password: await hashPassword(req.body.password),
+      email: req.body.email,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      role: 'OPERATOR'
     },
   });
 
   // Create a JWT token for the user and send it in the response
-  const token = createJWT(user as UserType);
+  const token = createJWT(user as User);
   res.json({ token });
 };
 
@@ -47,8 +46,7 @@ export const signin: RequestHandler = async (req, res) => {
     res.json({ message: 'invalid input' });
     return;
   }
-
   // Create a JWT token for the user and send it in the response
-  const token = createJWT(user as UserType);
+  const token = createJWT(user as User);
   res.json({ token });
 };

@@ -1,11 +1,12 @@
 import jwt, { Secret } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { Request, RequestHandler } from 'express';
-import { User as PrismaUser } from '@prisma/client';
 
-interface User extends Omit<PrismaUser, 'username' | 'id'> {
-  name: string;
-  id: string;
+export interface User {
+  id: string | number;
+  username: string;
+  email: string;
+  password: string;
 }
 
 interface AuthenticatedRequest extends Request {
@@ -27,7 +28,7 @@ export const createJWT = (user: User): string => {
   const token = jwt.sign(
     {
       id: user.id,
-      username: user.name,
+      username: user.username,
     },
     process.env.JWT_SECRET as Secret
   );
