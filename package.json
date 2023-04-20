@@ -1,11 +1,13 @@
 {
-  "name": "fullstack_todo",
+  "name": "N.O.T.E",
   "version": "1.0.0",
-  "description": "api design using node,express,ts,prisma",
+  "description": "A full-stack web application that facilitates Networked Observation & Tracking Environment",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "author": "",
   "license": "ISC",
