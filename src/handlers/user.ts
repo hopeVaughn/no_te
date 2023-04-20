@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import prisma from '../db';
 import { User } from '@prisma/client';
-import { comparePasswords, createJWT, hashPassword } from '../modules/auth';
+import { comparePasswords, createJWT, hashPassword, AuthenticatedRequest } from '../modules/auth';
 
 // Request handler to create a new user
 export const createNewUser: RequestHandler = async (req, res) => {
@@ -52,10 +52,37 @@ export const signin: RequestHandler = async (req, res) => {
   res.json({ token });
 };
 
-export const getAllUsers: RequestHandler = async (req, res) => {
-  //
-}
+// Get all users and user by id handlers are using ensureAdmin handler in routes to protect these.
 
-export const getUserById: RequestHandler = async (req, res) => {
-  //
-}
+export const getAllUsers: RequestHandler = async (req: AuthenticatedRequest, res) => {
+  try {
+    const users = await prisma.user.findMany();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Error fetching users' });
+  }
+};
+
+export const getUserById: RequestHandler = async (req: AuthenticatedRequest, res) => {
+  const id = req.params.id;
+
+  if (!id) {
+    res.status(400);
+    res.json({ message: 'Invalid request data' });
+    return;
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id },
+  });
+
+  if (!user) {
+    res.status(404);
+    res.json({ message: 'User not found' });
+    return;
+  }
+
+  res.status(200);
+  res.json(user);
+};

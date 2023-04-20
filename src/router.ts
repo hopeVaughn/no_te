@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { protect } from './modules/auth';
+import { ensureAdmin } from './modules/auth';
 import {
   getAllUsers,
   getUserById,
@@ -19,8 +19,8 @@ const router = Router();
 /*
  * Users
  */
-router.get('/users', getAllUsers);
-router.get('/users/:id', getUserById);
+router.get('/users', ensureAdmin, getAllUsers);
+router.get('/users/:id', ensureAdmin, getUserById);
 
 /*
  * Cameras
@@ -34,9 +34,9 @@ router.delete('/cameras/:id', deleteCamera);
 /*
  * Alerts
  */
-router.get('/alerts', protect, getAllAlerts);
-router.post('/alerts', protect, processCameraAlert);
-router.get('/alerts/:id', protect, getAlertById);
-router.put('/alerts/:id/acknowledge', protect, acknowledgeAlert);
+router.get('/alerts', getAllAlerts);
+router.post('/alerts', processCameraAlert);
+router.get('/alerts/:id', getAlertById);
+router.put('/alerts/:id/acknowledge', acknowledgeAlert);
 
 export default router;

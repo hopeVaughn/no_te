@@ -65,3 +65,16 @@ export const protect: RequestHandler = (req: AuthenticatedRequest, res, next) =>
     return;
   }
 };
+
+// Middleware function to ensure the authenticated user is an admin
+export const ensureAdmin: RequestHandler = (req: AuthenticatedRequest, res, next) => {
+  // Check if the authenticated user has the role of 'ADMIN'
+  if (req.user.role !== 'ADMIN') {
+    res.status(403);
+    res.json({ message: 'Forbidden: Insufficient privileges' });
+    return;
+  }
+
+  // Proceed to the next middleware or route handler
+  next();
+};
