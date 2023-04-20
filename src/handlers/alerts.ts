@@ -82,9 +82,46 @@ export const acknowledgeAlert: RequestHandler = async (req: AuthenticatedRequest
   res.json(updatedAlert);
 };
 
-export const getAllAlerts: RequestHandler = async (req, res) => {
-  //
-}
+export const getAllAlerts: RequestHandler = async (req: AuthenticatedRequest, res) => {
+  try {
+    const alerts = await prisma.alert.findMany({
+      include: {
+        camera: true,
+        acknowledgedBy: true,
+      },
+    });
+
+    res.status(200).json(alerts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching alerts' });
+  }
+};
+
 export const getAlertById: RequestHandler = async (req, res) => {
-  //
-}
+  const id = req.params.id;
+
+  if (!id) {
+    res.status(400);
+    res.json({ message: 'Invalid request data' });
+    return;
+  }
+
+  // Find the alert by its ID, and include the related camera and the user who acknowledged the alert (if any)
+  const alert = await prisma.alert.findUnique({
+    where: { id },
+    include: {
+      camera: true,
+      acknowledgedBy: true,
+    },
+  });
+
+  if (!alert) {
+    res.status(404);
+    res.json({ message: 'Alert not found' });
+    return;
+  }
+
+  res.status(200);
+  res.json(alert);
+};

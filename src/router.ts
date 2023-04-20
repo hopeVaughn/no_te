@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { protect } from './modules/auth';
 import {
   getAllUsers,
   getUserById,
@@ -33,9 +34,9 @@ router.delete('/cameras/:id', deleteCamera);
 /*
  * Alerts
  */
-router.get('/alerts', getAllAlerts);
-router.post('/alerts', processCameraAlert);
-router.get('/alerts/:id', getAlertById);
-router.put('/alerts/:id/acknowledge', acknowledgeAlert);
+router.get('/alerts', protect, getAllAlerts);
+router.post('/alerts', protect, processCameraAlert);
+router.get('/alerts/:id', protect, getAlertById);
+router.put('/alerts/:id/acknowledge', protect, acknowledgeAlert);
 
 export default router;
