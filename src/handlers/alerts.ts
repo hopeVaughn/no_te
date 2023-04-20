@@ -1,10 +1,16 @@
 import { RequestHandler } from 'express';
 import prisma from '../db';
 import { AuthenticatedRequest } from '../modules/auth'; // Add this import
+import { Alert, AlertType, Camera } from '@prisma/client';
 
+interface CameraAlert {
+  cameraId: Camera['id'];
+  alertType: AlertType;
+  detectedAt: Alert['detectedAt']
+}
 // This handler expects a POST request containing a JSON object with `cameraId`, `alertType`, and `detectedAt` properties.
 export const processCameraAlert: RequestHandler = async (req, res) => {
-  const { cameraId, alertType, detectedAt } = req.body;
+  const { cameraId, alertType, detectedAt }: CameraAlert = req.body;
 
   // Validate the request data
   if (!cameraId || !alertType || !detectedAt) {
