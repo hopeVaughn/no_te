@@ -2,12 +2,6 @@ import jwt, { Secret } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { Request, RequestHandler } from 'express';
 import { User } from '@prisma/client';
-// export interface User {
-//   id: string | number;
-//   username: string;
-//   email: string;
-//   password: string;
-// }
 
 export interface AuthenticatedRequest extends Request {
   user: User;
