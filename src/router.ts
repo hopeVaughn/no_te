@@ -8,7 +8,7 @@ import {
   updateCamera,
   deleteCamera,
   getAllAlerts,
-  addAlert,
+  processCameraAlert,
   getAlertById,
   acknowledgeAlert
 } from './handlers/index';
@@ -34,7 +34,7 @@ router.delete('/cameras/:id', deleteCamera);
  * Alerts
  */
 router.get('/alerts', getAllAlerts);
-router.post('/alerts', addAlert);
+router.post('/alerts', processCameraAlert);
 router.get('/alerts/:id', getAlertById);
 router.put('/alerts/:id/acknowledge', acknowledgeAlert);
 

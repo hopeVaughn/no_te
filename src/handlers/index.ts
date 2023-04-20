@@ -1,11 +1,11 @@
 import { createNewUser, signin, getAllUsers, getUserById } from "./user";
-import { addAlert, getAllAlerts, getAlertById, acknowledgeAlert } from "./alerts"
+import { processCameraAlert, getAllAlerts, getAlertById, acknowledgeAlert } from "./alerts"
 import { addCamera, getAllCameras, getCameraById, updateCamera, deleteCamera } from './camera'
 
 export {
   createNewUser,
   signin,
-  addAlert,
+  processCameraAlert,
   getAllAlerts,
   getAlertById,
   acknowledgeAlert,
