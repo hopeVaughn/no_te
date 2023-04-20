@@ -26,10 +26,10 @@ router.get('/users/:id', ensureAdmin, getUserById);
  * Cameras
  */
 router.get('/cameras', getAllCameras);
-router.post('/cameras', addCamera);
+router.post('/cameras', ensureAdmin, addCamera);
 router.get('/cameras/:id', getCameraById);
-router.put('/cameras/:id', updateCamera);
-router.delete('/cameras/:id', deleteCamera);
+router.put('/cameras/:id', ensureAdmin, updateCamera);
+router.delete('/cameras/:id', ensureAdmin, deleteCamera);
 
 /*
  * Alerts
