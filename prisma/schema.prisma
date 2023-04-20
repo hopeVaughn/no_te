@@ -38,7 +38,7 @@ model Alert {
   cameraId       String
   alertType      AlertType
   detectedAt     DateTime
-  acknowledged   Boolean   @default(false)
+  acknowledged   Boolean
   acknowledgedBy User?     @relation("UserAcknowledgedAlerts", fields: [userId], references: [id])
   userId         String?
   acknowledgedAt DateTime?
