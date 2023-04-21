@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response, NextFunction } from 'express';
 import router from './router'
 import morgan from 'morgan'
 import cors from 'cors'
@@ -22,4 +22,16 @@ app.get('/', (req, res) => {
 app.use('/api', protect, router)
 app.post('/user', createNewUser)
 app.post('/signin', signin)
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  if (err.type === 'auth') {
+    res.status(401).json({ message: 'Invalid User' });
+  } else if (err.type === 'input') {
+    res.status(400).json({ message: 'Invalid Input' });
+  } else {
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
+
 export default app

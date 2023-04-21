@@ -4,22 +4,29 @@ import { User } from '@prisma/client';
 import { comparePasswords, createJWT, hashPassword, AuthenticatedRequest } from '../modules/auth';
 
 // Request handler to create a new user
-export const createNewUser: RequestHandler = async (req, res) => {
+export const createNewUser: RequestHandler = async (req, res, next) => {
   // Create the user in the database
-  const user = await prisma.user.create({
-    data: {
-      username: req.body.username,
-      password: await hashPassword(req.body.password),
-      email: req.body.email,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      role: 'OPERATOR'
-    },
-  });
+  try {
+    const user = await prisma.user.create({
+      data: {
+        username: req.body.username,
+        password: await hashPassword(req.body.password),
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        role: 'OPERATOR'
+      },
+    });
 
-  // Create a JWT token for the user and send it in the response
-  const token = createJWT(user as User);
-  res.json({ token });
+    // Create a JWT token for the user and send it in the response
+    const token = createJWT(user as User);
+    res.json({ token });
+
+  } catch (error) {
+    console.error(error.message)
+    error.type = 'input'
+    next(error)
+  }
 };
 
 // Request handler to authenticate a user
