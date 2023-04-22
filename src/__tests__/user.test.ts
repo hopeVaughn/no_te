@@ -15,8 +15,6 @@ jest.mock('../db', () => ({
 
 const next = jest.fn();
 
-
-
 describe('getAllUsers', () => {
   jest.spyOn(console, 'error').mockImplementation(() => { });
 
