@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import app from './server';
-
+import config from './config';
 dotenv.config();
 
 process.on('uncaughtException', (err: Error) => {
@@ -13,6 +13,6 @@ process.on('unhandledRejection', (reason: {} | null | undefined, p: Promise<any>
   // No process.exit() call, allowing the server to continue running
 });
 
-app.listen(3001, () => {
-  console.log('server listening on http://localhost:3001');
+app.listen(config.port, () => {
+  console.log(`Server listening on http://localhost:${config.port}`);
 });
