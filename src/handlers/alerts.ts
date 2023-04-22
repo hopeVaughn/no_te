@@ -1,8 +1,10 @@
+// Import necessary modules and interfaces
 import { RequestHandler } from 'express';
 import prisma from '../db';
-import { AuthenticatedRequest } from '../modules/auth'; // Add this import
+import { AuthenticatedRequest } from '../modules/auth';
 import { Alert, AlertType, Camera } from '@prisma/client';
 
+// Define an interface for the request body of the `processCameraAlert` handler
 interface CameraAlert {
   cameraId: Camera['id'];
   alertType: AlertType;
@@ -11,6 +13,7 @@ interface CameraAlert {
 
 // This handler expects a POST request containing a JSON object with `cameraId`, `alertType`, and `detectedAt` properties.
 export const processCameraAlert: RequestHandler = async (req, res) => {
+  // Extract the necessary data from the request body
   const { cameraId, alertType, detectedAt }: CameraAlert = req.body;
 
   // Validate the request data
@@ -25,6 +28,7 @@ export const processCameraAlert: RequestHandler = async (req, res) => {
     where: { id: cameraId },
   });
 
+  // Return an error response if the camera is not found
   if (!camera) {
     res.status(404);
     res.json({ message: 'Camera not found' });
@@ -47,9 +51,12 @@ export const processCameraAlert: RequestHandler = async (req, res) => {
 };
 
 
+// This handler expects a PUT request with a URL parameter (`id`) specifying the ID of the alert to be acknowledged.
 export const acknowledgeAlert: RequestHandler = async (req: AuthenticatedRequest, res) => {
+  // Extract the alert ID from the URL parameter
   const id = req.params.id;
 
+  // Validate the request data
   if (!id) {
     res.status(400);
     res.json({ message: 'Invalid request data' });
@@ -61,13 +68,14 @@ export const acknowledgeAlert: RequestHandler = async (req: AuthenticatedRequest
     where: { id },
   });
 
+  // Return an error response if the alert is not found
   if (!alert) {
     res.status(404);
     res.json({ message: 'Alert not found' });
     return;
   }
 
-  // Check if the alert has already been acknowledged
+  // Return an error response if the alert has already been acknowledged
   if (alert.acknowledged) {
     res.status(400);
     res.json({ message: 'Alert already acknowledged' });
@@ -89,8 +97,11 @@ export const acknowledgeAlert: RequestHandler = async (req: AuthenticatedRequest
   res.json(updatedAlert);
 };
 
+
+// This handler expects a GET request and returns all alert records in the database.
 export const getAllAlerts: RequestHandler = async (req: AuthenticatedRequest, res) => {
   try {
+    // Query all alert records and include associated camera and acknowledgedBy data
     const alerts = await prisma.alert.findMany({
       include: {
         camera: true,
@@ -98,6 +109,7 @@ export const getAllAlerts: RequestHandler = async (req: AuthenticatedRequest, re
       },
     });
 
+    // Return the alert records
     res.status(200).json(alerts);
   } catch (error) {
     console.error(error.message);
@@ -105,15 +117,20 @@ export const getAllAlerts: RequestHandler = async (req: AuthenticatedRequest, re
   }
 };
 
+
+// This handler expects a GET request with a URL parameter (`id`) specifying the ID of the alert to retrieve.
 export const getAlertById: RequestHandler = async (req, res) => {
+  // Extract the alert ID from the URL parameter
   const id = req.params.id;
 
+  // Validate the request data
   if (!id) {
     res.status(400);
     res.json({ message: 'Invalid request data' });
     return;
   }
 
+  // Query the alert record with the specified ID and include associated camera and acknowledgedBy data
   const alert = await prisma.alert.findUnique({
     where: { id },
     select: {
@@ -145,12 +162,14 @@ export const getAlertById: RequestHandler = async (req, res) => {
     },
   });
 
+  // Return an error response if the alert is not found
   if (!alert) {
     res.status(404);
     res.json({ message: 'Alert not found' });
     return;
   }
 
+  // Return the alert record
   res.status(200);
   res.json(alert);
 };
