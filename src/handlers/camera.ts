@@ -1,10 +1,9 @@
-// src/handlers/camera.ts
-import { RequestHandler } from 'express';
-import prisma from '../db';
+import { NextFunction, RequestHandler } from 'express';
 import { AuthenticatedRequest } from '../modules/auth';
+import prisma from '../db';
 
 // Request handler to add a new camera
-export const addCamera: RequestHandler = async (req: AuthenticatedRequest, res) => {
+export const addCamera: RequestHandler = async (req: AuthenticatedRequest, res, next: NextFunction) => {
   const { name, location, status, videoUrl } = req.body;
 
   // Validate the request data
@@ -30,7 +29,7 @@ export const addCamera: RequestHandler = async (req: AuthenticatedRequest, res) 
 };
 
 // Request handler to fetch all cameras
-export const getAllCameras: RequestHandler = async (req, res) => {
+export const getAllCameras: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const cameras = await prisma.camera.findMany();
     res.status(200).json(cameras);
@@ -41,7 +40,7 @@ export const getAllCameras: RequestHandler = async (req, res) => {
 };
 
 // Request handler to fetch a camera by its ID
-export const getCameraById: RequestHandler = async (req, res) => {
+export const getCameraById: RequestHandler = async (req, res, next: NextFunction) => {
   const id = req.params.id;
 
   // Validate the request data
@@ -69,7 +68,7 @@ export const getCameraById: RequestHandler = async (req, res) => {
 };
 
 // Request handler to update a camera by its ID
-export const updateCamera: RequestHandler = async (req: AuthenticatedRequest, res) => {
+export const updateCamera: RequestHandler = async (req: AuthenticatedRequest, res, next: NextFunction) => {
   const id = req.params.id;
   const { name, location, status, videoUrl } = req.body;
 
@@ -97,7 +96,7 @@ export const updateCamera: RequestHandler = async (req: AuthenticatedRequest, re
 };
 
 // Request handler to delete a camera by its ID
-export const deleteCamera: RequestHandler = async (req: AuthenticatedRequest, res) => {
+export const deleteCamera: RequestHandler = async (req: AuthenticatedRequest, res, next: NextFunction) => {
   const id = req.params.id;
 
   // Validate the request data
