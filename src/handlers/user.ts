@@ -63,13 +63,23 @@ export const signin: RequestHandler = async (req, res) => {
 
 export const getAllUsers: RequestHandler = async (req: AuthenticatedRequest, res) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        role: true,
+      },
+    });
     res.status(200).json(users);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ message: 'Error fetching users' });
   }
 };
+
 
 export const getUserById: RequestHandler = async (req: AuthenticatedRequest, res) => {
   const id = req.params.id;

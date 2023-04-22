@@ -114,12 +114,34 @@ export const getAlertById: RequestHandler = async (req, res) => {
     return;
   }
 
-  // Find the alert by its ID, and include the related camera and the user who acknowledged the alert (if any)
   const alert = await prisma.alert.findUnique({
     where: { id },
-    include: {
-      camera: true,
-      acknowledgedBy: true,
+    select: {
+      id: true,
+      cameraId: true,
+      alertType: true,
+      detectedAt: true,
+      acknowledged: true,
+      acknowledgedAt: true,
+      camera: {
+        select: {
+          id: true,
+          name: true,
+          location: true,
+          status: true,
+          videoUrl: true,
+        },
+      },
+      acknowledgedBy: {
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          firstName: true,
+          lastName: true,
+          role: true,
+        },
+      },
     },
   });
 

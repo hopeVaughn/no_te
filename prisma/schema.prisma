@@ -43,6 +43,10 @@ model Alert {
   acknowledgedBy User?     @relation("UserAcknowledgedAlerts", fields: [userId], references: [id])
   userId         String?
   acknowledgedAt DateTime?
+
+  @@index([cameraId])
+  @@index([alertType])
+  @@index([acknowledged])
 }
 
 enum UserRole {
