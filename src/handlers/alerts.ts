@@ -1,17 +1,17 @@
-import { RequestHandler } from 'express';
+import { NextFunction, RequestHandler } from 'express';
 import prisma from '../db';
 import { AuthenticatedRequest } from '../modules/auth';
 import { Alert, AlertType, Camera } from '@prisma/client';
 
 // Define an interface for the request body of the `processCameraAlert` handler
-interface CameraAlert {
+export interface CameraAlert {
   cameraId: Camera['id'];
   alertType: AlertType;
   detectedAt: Alert['detectedAt']
 }
 
 // This handler expects a POST request containing a JSON object with `cameraId`, `alertType`, and `detectedAt` properties.
-export const processCameraAlert: RequestHandler = async (req, res) => {
+export const processCameraAlert: RequestHandler = async (req, res, next: NextFunction) => {
   // Extract the necessary data from the request body
   const { cameraId, alertType, detectedAt }: CameraAlert = req.body;
 
@@ -51,7 +51,7 @@ export const processCameraAlert: RequestHandler = async (req, res) => {
 
 
 // This handler expects a PUT request with a URL parameter (`id`) specifying the ID of the alert to be acknowledged.
-export const acknowledgeAlert: RequestHandler = async (req: AuthenticatedRequest, res) => {
+export const acknowledgeAlert: RequestHandler = async (req: AuthenticatedRequest, res, next: NextFunction) => {
   // Extract the alert ID from the URL parameter
   const id = req.params.id;
 
@@ -98,7 +98,7 @@ export const acknowledgeAlert: RequestHandler = async (req: AuthenticatedRequest
 
 
 // This handler expects a GET request and returns all alert records in the database.
-export const getAllAlerts: RequestHandler = async (req: AuthenticatedRequest, res) => {
+export const getAllAlerts: RequestHandler = async (req: AuthenticatedRequest, res, next: NextFunction) => {
   try {
     // Query all alert records and include associated camera and acknowledgedBy data
     const alerts = await prisma.alert.findMany({
