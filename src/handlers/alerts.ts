@@ -1,4 +1,3 @@
-// Import necessary modules and interfaces
 import { RequestHandler } from 'express';
 import prisma from '../db';
 import { AuthenticatedRequest } from '../modules/auth';
