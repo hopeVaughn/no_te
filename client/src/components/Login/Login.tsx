@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { authenticate } from '../../services/auth';
 
 interface Props {
   title: string;
@@ -34,13 +35,13 @@ const LoginForm: React.FC<Props> = ({ title }) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(
-        formMode === FormMode.SignIn ? '/api/signin' : '/api/users',
-        formFields.reduce(
-          (data, field) => ({ ...data, [field.name]: field.value }),
-          {}
-        )
+      const endpoint = formMode === FormMode.SignIn ? '/signin' : '/user';
+      const data = formFields.reduce(
+        (data, field) => ({ ...data, [field.name]: field.value }),
+        {}
       );
+
+      const response = await authenticate(endpoint, data);
 
       // Handle successful login or registration
     } catch (error) {
