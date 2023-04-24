@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { authenticate } from '../../services/auth';
-
+import { useNavigate } from 'react-router';
 interface Props {
   title: string;
+  logIn: () => void;
 }
 
 interface InputField {
@@ -30,7 +30,7 @@ const LoginForm: React.FC<Props> = ({ title }) => {
     { label: 'First Name', type: 'text', name: 'firstName', value: '' },
     { label: 'Last Name', type: 'text', name: 'lastName', value: '' },
   ]);
-
+  const navigate = useNavigate()
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -43,9 +43,16 @@ const LoginForm: React.FC<Props> = ({ title }) => {
 
       const response = await authenticate(endpoint, data);
 
+
       // Handle successful login or registration
+      if (response) {
+        navigate('/dashboard')
+      }
     } catch (error) {
-      // Handle error
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+      console.error('Unhandled error: ', error);
     }
   };
 

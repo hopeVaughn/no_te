@@ -22,6 +22,10 @@ app.get('/', (req, res) => {
 app.use('/api', protect, router)
 app.post('/user', createNewUser)
 app.post('/signin', signin)
+// Add an endpoint to check if the user is authenticated
+app.get('/auth/check', protect, (req, res) => {
+  res.json({ isLoggedIn: true });
+});
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   if (err.type === 'auth') {

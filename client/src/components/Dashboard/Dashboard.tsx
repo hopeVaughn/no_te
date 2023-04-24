@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { cameraEventSystem } from '../../utils/eventSystem';
 import { simulateDetection } from '../../services/camera';
-
+import CameraList from '../Camera/CameraList';
 // Define the Camera interface
 interface Camera {
-  id: number;
+  id: string;
 }
 
 // Define the CameraEventDetail interface
 interface CameraEventDetail {
-  cameraId: number;
+  cameraId: string;
   eventType: string;
   timestamp: Date;
 }
@@ -17,8 +17,8 @@ interface CameraEventDetail {
 const Dashboard: React.FC = () => {
   // Assume you have an array of camera objects with an `id` property
   const cameras: Camera[] = [
-    { id: 1 },
-    { id: 2 },
+    { id: "" },
+    { id: "" },
     // ...
   ];
 
@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      {/* Render your camera feeds and other UI elements here */}
+      <CameraList />
     </div>
   );
 };

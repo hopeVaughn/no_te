@@ -1,15 +1,41 @@
-import React from 'react';
-// import CameraList from './components/Camera/CameraList';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CameraList from './components/Camera/CameraList';
 import LoginForm from './components/Login/Login';
+import Dashboard from './components/Dashboard/Dashboard'
+import Protected from './components/Protected/Protected';
+import { authenticate } from './services/auth';
+
 const App: React.FC = () => {
+  const [isLoggedIn, setisLoggedIn] = useState<boolean | null>(null);
+
+  const logIn = async () => {
+    try {
+      const response = await authenticate('/signin', {});
+      setisLoggedIn(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+      console.error('Unhandled error: ', error);
+    }
+  };
+
+  const logOut = () => {
+    setisLoggedIn(false);
+  };
+
+  // Redirect to the dashboard route if the user is authenticated
 
 
   return (
-    <div className="container-full w-screen h-screen bg-gradient-to-br from-black via-gray-800 to-gray-300 flex items-center">
-      <LoginForm title="" />
-      {/* <CameraList /> */}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginForm title="" logIn={logIn} />} />
+        <Route path="/dashboard" element={<Protected isLoggedIn={isLoggedIn}><Dashboard /></Protected>} />
+        <Route path="/cameras" element={<Protected isLoggedIn={isLoggedIn}><CameraList /></Protected>} />
+      </Routes>
+    </Router>
   );
 };
-
 export default App;

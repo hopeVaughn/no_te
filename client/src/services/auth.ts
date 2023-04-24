@@ -23,3 +23,15 @@ export const authenticate = async (
 
   }
 };
+
+export const checkAuth = async () => {
+  try {
+    const response = await apiClient.get('/auth/check');
+    return response.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    console.error('Unhandled error: ', error);
+  }
+};
