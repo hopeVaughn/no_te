@@ -1,12 +1,12 @@
 import axios from 'axios';
-// Import CameraEventDetail and cameraEventSystem
+import { AlertType } from '../types'
 import { CameraEventDetail, cameraEventSystem } from '../utils/eventSystem';
 
-export async function simulateDetection(cameraId: number) {
+export async function simulateDetection(cameraId: string) {
   const randomInterval = Math.floor(Math.random() * 10000) + 5000;
 
   setTimeout(async () => {
-    const eventType = Math.random() > 0.5 ? 'MOTION' : 'SOUND';
+    const eventType = Math.random() > 0.5 ? AlertType.MOTION : AlertType.SOUND;
     const detectedAt = new Date();
 
     const eventDetail: CameraEventDetail = {

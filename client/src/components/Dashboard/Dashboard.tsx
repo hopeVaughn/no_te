@@ -1,5 +1,3 @@
-// In components/Dashboard/Dashboard.tsx
-
 import { useEffect } from 'react';
 import { cameraEventSystem } from '../../utils/eventSystem';
 import { simulateDetection } from '../../services/camera';

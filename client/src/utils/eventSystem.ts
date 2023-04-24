@@ -1,9 +1,11 @@
-// Add this interface definition
+import { AlertType } from '../types'
+
 export interface CameraEventDetail {
-  cameraId: number;
-  eventType: string;
+  cameraId: string;
+  eventType: AlertType;
   detectedAt: Date;
 }
+
 
 class CameraEventSystem extends EventTarget {
   static instance: CameraEventSystem;
