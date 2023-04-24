@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Camera from './Camera';
-import { Camera as CameraType } from '../../types';
+import { CameraStatus, Camera as CameraType } from '../../types';
 import { getAllCameras } from '../../services/cameraService';
 
 const CameraList: React.FC = () => {
@@ -9,7 +9,10 @@ const CameraList: React.FC = () => {
   useEffect(() => {
     async function fetchCameras() {
       const camerasData = await getAllCameras();
-      setCameras(camerasData);
+      const onlineCameras = camerasData.filter(
+        (camera: CameraType) => camera.status === CameraStatus.ONLINE
+      );
+      setCameras(onlineCameras);
     }
 
     fetchCameras();

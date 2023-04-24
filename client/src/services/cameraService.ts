@@ -1,6 +1,17 @@
 import axios from 'axios';
 
-export async function getAllCameras() {
-  const response = await axios.get('/api/cameras?status=ONLINE');
-  return response.data;
-}
+const apiClient = axios.create({
+  baseURL: 'http://localhost:3001/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const getAllCameras = async (status?: string) => {
+  const { data } = await apiClient.get('/cameras', {
+    params: status ? { status } : {},
+  });
+  return data;
+};
+
+

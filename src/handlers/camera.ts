@@ -1,5 +1,6 @@
 import { NextFunction, RequestHandler } from 'express';
 import { AuthenticatedRequest } from '../modules/auth';
+import { CameraStatus } from '@prisma/client';
 import prisma from '../db';
 
 // Request handler to add a new camera
@@ -30,8 +31,15 @@ export const addCamera: RequestHandler = async (req: AuthenticatedRequest, res, 
 
 // Request handler to fetch all cameras
 export const getAllCameras: RequestHandler = async (req, res, next: NextFunction) => {
+  const { status } = req.query;
+
+  let where = {};
+  if (status && Object.values(CameraStatus).includes(status as CameraStatus)) {
+    where = { status };
+  }
+
   try {
-    const cameras = await prisma.camera.findMany();
+    const cameras = await prisma.camera.findMany({ where });
     res.status(200).json(cameras);
   } catch (error) {
     console.error(error.message);
