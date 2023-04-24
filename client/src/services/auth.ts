@@ -5,7 +5,7 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  // withCredentials: true, // Add this line to allow sending cookies
+  withCredentials: true, // Add this line to allow sending cookies
 });
 
 export const authenticate = async (

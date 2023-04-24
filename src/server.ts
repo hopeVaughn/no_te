@@ -7,7 +7,10 @@ import { createNewUser, signin } from './handlers/user'
 const app = express();
 
 //--MiddleWare
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
