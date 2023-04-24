@@ -54,10 +54,20 @@ export const signin: RequestHandler = async (req, res) => {
     res.json({ message: 'invalid input' });
     return;
   }
+
   // Create a JWT token for the user and send it in the response
   const token = createJWT(user as User);
-  res.json({ token });
+
+  // Set the JWT as a cookie
+  res.cookie('jwt', token, {
+    httpOnly: true,
+    // Uncomment the following line if you want to use secure cookies (requires HTTPS)
+    // secure: true,
+  });
+
+  res.status(200).json({ message: 'Authenticated successfully' });
 };
+
 
 // Get all users and user by id handlers are using ensureAdmin handler in routes to protect these.
 
