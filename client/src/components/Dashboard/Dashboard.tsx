@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { cameraEventSystem } from '../../utils/eventSystem';
-import { simulateDetection } from '../../services/camera';
+// import { simulateDetection } from '../../services/camera';
 import CameraList from '../Camera/CameraList';
 // Define the Camera interface
 interface Camera {
@@ -22,26 +22,26 @@ const Dashboard: React.FC = () => {
     // ...
   ];
 
-  useEffect(() => {
-    function handleCameraEvent(event: Event) {
-      const customEvent = event as CustomEvent<CameraEventDetail>;
-      const detail = customEvent.detail;
-      console.log(`Camera ${detail.cameraId} detected ${detail.eventType}`);
-      // Update the UI or display an alert accordingly
-    }
+  // useEffect(() => {
+  //   function handleCameraEvent(event: Event) {
+  //     const customEvent = event as CustomEvent<CameraEventDetail>;
+  //     const detail = customEvent.detail;
+  //     console.log(`Camera ${detail.cameraId} detected ${detail.eventType}`);
+  //     // Update the UI or display an alert accordingly
+  //   }
 
-    // Add event listener for camera events
-    cameraEventSystem.addEventListener('cameraEvent', handleCameraEvent);
+  //   // Add event listener for camera events
+  //   cameraEventSystem.addEventListener('cameraEvent', handleCameraEvent);
 
-    // Call simulateDetection for each camera
-    cameras.forEach((camera) => {
-      simulateDetection(camera.id);
-    });
+  //   // Call simulateDetection for each camera
+  //   // cameras.forEach((camera) => {
+  //   //   simulateDetection(camera.id);
+  //   // });
 
-    return () => {
-      cameraEventSystem.removeEventListener('cameraEvent', handleCameraEvent);
-    };
-  }, []);
+  //   return () => {
+  //     cameraEventSystem.removeEventListener('cameraEvent', handleCameraEvent);
+  //   };
+  // }, []);
 
   // Render the component UI
   return (
