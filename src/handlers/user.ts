@@ -60,12 +60,11 @@ export const signin: RequestHandler = async (req, res) => {
 
   // Set the JWT as a cookie
   res.cookie('token', token, {
-    httpOnly: true,
-    // Uncomment the following line if you want to use secure cookies (requires HTTPS)
+    // httpOnly: true,
     secure: true,
   });
 
-  res.status(200).json({ message: 'Authenticated successfully' });
+  res.status(200).json({ message: 'Authenticated successfully', token });
 };
 
 

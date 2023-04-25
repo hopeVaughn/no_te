@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { AlertType } from '../types'
 import { CameraEventDetail, cameraEventSystem } from '../utils/eventSystem';
 import apiClient from './apiClient';

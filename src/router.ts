@@ -80,7 +80,7 @@ router.get('/alerts/:id', param('id').isUUID(), handleInputErrors, getAlertById)
 // Route to acknowledge an alert by its ID
 router.put('/alerts/:id/acknowledge', param('id').isUUID(), handleInputErrors);
 
-// Error handling middleware
+// // Error handling middleware
 router.use((err: any, req: Request, res: Response, next: NextFunction) => {
   // If the error type is 'auth', respond with a 401 status and an 'Invalid User' message
   if (err.type === 'auth') {
