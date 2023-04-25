@@ -1,12 +1,5 @@
 import axios from 'axios';
-axios.defaults.withCredentials = true;
-const apiClient = axios.create({
-  baseURL: 'http://localhost:3001/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true, // Add this line to allow sending cookies
-});
+import apiClient from './apiClient';
 
 export const getAllCameras = async (status?: string) => {
   const { data } = await apiClient.get('/cameras', {

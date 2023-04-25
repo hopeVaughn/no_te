@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
   res.json({ message: "hello" })
 })
 
-app.use('/api', router)
+app.use('/api', protect, router)
 app.post('/user', createNewUser)
 app.post('/signin', signin)
 

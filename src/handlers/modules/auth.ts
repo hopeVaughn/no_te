@@ -2,10 +2,11 @@ import jwt, { Secret } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { Request, RequestHandler } from 'express';
 import { User } from '@prisma/client';
-
+import prisma from "../../db"
 export interface AuthenticatedRequest extends Request {
   user: User;
 }
+
 
 // Compare the given plaintext password with the stored hashed password
 export const comparePasswords = (password: string, hash: string): Promise<boolean> => {
@@ -30,7 +31,7 @@ export const createJWT = (user: User): string => {
 };
 
 // Middleware function to protect routes that require authentication
-export const protect: RequestHandler = (req: AuthenticatedRequest, res, next) => {
+export const protect: RequestHandler = async (req: AuthenticatedRequest, res, next) => {
   // Get the authorization header from the request
   const bearer = req.headers.authorization;
 
@@ -52,10 +53,23 @@ export const protect: RequestHandler = (req: AuthenticatedRequest, res, next) =>
   }
 
   try {
-    // Verify the token using the secret key and add the decoded user to the request object
-    const user = jwt.verify(token, process.env.JWT_SECRET as Secret) as User;
-    console.log('Decoded user:', user);
+    // Verify the token using the secret key and get the decoded payload
+    const decodedPayload = jwt.verify(token, process.env.JWT_SECRET as Secret) as { id: string; username: string };
+    console.log('Decoded payload:', decodedPayload);
+
+    // Fetch the user from the database using the decoded user id
+    const user = await prisma.user.findUnique({ where: { id: decodedPayload.id } });
+
+    // If the user is not found, return an unauthorized error
+    if (!user) {
+      res.status(401);
+      res.json({ message: 'User not found' });
+      return;
+    }
+
+    // Add the user to the request object
     req.user = user;
+
     // Proceed to the next middleware or route handler
     next();
   } catch (e) {

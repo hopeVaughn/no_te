@@ -1,12 +1,5 @@
-import axios from 'axios';
-
-const apiClient = axios.create({
-  baseURL: 'http://localhost:3001',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true,
-});
+import apiClient from './apiClient';
+import { setCookie } from '../utils/cookie';
 
 export const authenticate = async (
   endpoint: string,
@@ -18,6 +11,8 @@ export const authenticate = async (
     // Set the Authorization header with the token value from the response
     if (response.data.token) {
       apiClient.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+      // Also, save the token to a cookie to persist it across sessions
+      setCookie('jwt_token', response.data.token, 7); // Assuming the token should be stored for 7 days
     }
 
     return response.data;
