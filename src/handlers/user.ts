@@ -64,7 +64,7 @@ export const signin: RequestHandler = async (req, res) => {
     secure: true,
   });
 
-  res.status(200).json({ message: 'Authenticated successfully', token });
+  res.status(200).json({ message: 'Authenticated successfully', user: { id: user.id, username: user.username, role: user.role }, token });
 };
 
 

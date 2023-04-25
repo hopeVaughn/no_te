@@ -33,7 +33,7 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
   }, [camera.id]);
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 mb-4">
+    <div className="bg-white rounded-lg shadow-md p-4 mb-4 overflow-hidden">
       <h2 className="text-lg font-medium mb-2">{camera.name}</h2>
       <p className="text-gray-500 mb-2">Location: {camera.location}</p>
       <p className="text-gray-500 mb-2">Status: {camera.status}</p>

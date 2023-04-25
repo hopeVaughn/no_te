@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { authenticate } from '../../services/auth';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+
 interface Props {
   title: string;
-  logIn: () => void;
+  handleLogin: (response: any) => void;
 }
 
 interface InputField {
@@ -21,7 +22,7 @@ enum FormMode {
   SignUp,
 }
 
-const LoginForm: React.FC<Props> = ({ title }) => {
+const LoginForm: React.FC<Props> = ({ title, handleLogin }) => {
   const [formMode, setFormMode] = useState(FormMode.SignIn);
   const [formFields, setFormFields] = useState<FormField[]>([
     { label: 'Username', type: 'text', name: 'username', value: '' },
@@ -30,7 +31,8 @@ const LoginForm: React.FC<Props> = ({ title }) => {
     { label: 'First Name', type: 'text', name: 'firstName', value: '' },
     { label: 'Last Name', type: 'text', name: 'lastName', value: '' },
   ]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -42,12 +44,11 @@ const LoginForm: React.FC<Props> = ({ title }) => {
       );
 
       const response = await authenticate(endpoint, data);
-      console.log(response);
-
 
       // Handle successful login or registration
       if (response) {
-        navigate('/dashboard')
+        handleLogin(response);
+        navigate('/dashboard');
       }
     } catch (error) {
       if (error instanceof Error) {

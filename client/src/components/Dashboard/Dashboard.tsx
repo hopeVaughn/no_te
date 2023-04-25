@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { cameraEventSystem } from '../../utils/eventSystem';
 import { simulateDetection } from '../../services/camera';
 import CameraList from '../Camera/CameraList';
+import { UserPropsWithLogout } from '../../App';
 
 // Define the Camera interface
 interface Camera {
@@ -15,13 +16,7 @@ interface CameraEventDetail {
   timestamp: Date;
 }
 
-const Dashboard: React.FC = () => {
-  // Assume you have an array of camera objects with an `id` property
-  const cameras: Camera[] = [
-    { id: "" },
-    { id: "" },
-    // ...
-  ];
+const Dashboard: React.FC<UserPropsWithLogout> = ({ id, username, role, handleLogout }) => {
 
   useEffect(() => {
     function handleCameraEvent(event: Event) {
@@ -43,16 +38,27 @@ const Dashboard: React.FC = () => {
       cameraEventSystem.removeEventListener('cameraEvent', handleCameraEvent);
     };
   }, []);
+  console.log(username);
 
   // Render the component UI
   return (
-    <div className="h-screen bg-white">
+    <div className="h-full bg-transparent min-h-screen flex flex-col">
       <nav className="bg-gray-800 text-white p-4 flex justify-between items-center">
         <div className="text-lg font-bold">N.O.T.E</div>
-        <div className="text-sm">Logged in as: John Doe</div>
+        <div className="text-sm flex items-center">
+          Logged in as: {username}
+          <div className="ml-4">
+            <button
+              onClick={handleLogout}
+              className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
       </nav>
-      <div className="p-4 md:p-8 lg:p-12">
-        <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      <div className="flex-grow p-4 md:p-8 lg:p-12">
+        <h1 className="text-2xl font-bold text-black mb-4">Dashboard</h1>
         <CameraList />
       </div>
     </div>

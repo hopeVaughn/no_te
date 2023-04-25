@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import CameraList from './components/Camera/CameraList';
 import LoginForm from './components/Login/Login';
-import Dashboard from './components/Dashboard/Dashboard'
+import Dashboard from './components/Dashboard/Dashboard';
 import Protected from './components/Protected/Protected';
 import { authenticate } from './services/auth';
 
+export type UserProps = {
+  id: string;
+  username: string;
+  role: string;
+};
+export interface UserPropsWithLogout extends UserProps {
+  handleLogout: () => void;
+}
 const App: React.FC = () => {
   const [isLoggedIn, setisLoggedIn] = useState<boolean | null>(null);
+  const [user, setUser] = useState<UserProps>({
+    id: '',
+    username: '',
+    role: '',
+  });
 
-  const logIn = async () => {
+  const handleLogin = async (response: any) => {
     try {
-      const response = await authenticate('/signin', {});
-      setisLoggedIn(true);
+      if (response) {
+        setUser(response.user);
+        setisLoggedIn(true);
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -21,18 +36,32 @@ const App: React.FC = () => {
     }
   };
 
-  const logOut = () => {
+  const handleLogout = () => {
     setisLoggedIn(false);
   };
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<div className="flex justify-center items-center h-screen"><LoginForm title="" logIn={logIn} /></div>} />
-        <Route path="/dashboard" element={<Protected isLoggedIn={isLoggedIn}><Dashboard /></Protected>} />
-        <Route path="/cameras" element={<Protected isLoggedIn={isLoggedIn}><CameraList /></Protected>} />
+        <Route
+          path="/"
+          element={
+            <div className="flex justify-center items-center h-screen">
+              <LoginForm title="" handleLogin={handleLogin} />
+            </div>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={<Protected isLoggedIn={isLoggedIn}><Dashboard id={user.id} username={user.username} role={user.role} handleLogout={handleLogout} /></Protected>}
+        />
+        {/* <Route
+          path="/cameras"
+          element={<Protected isLoggedIn={isLoggedIn}><CameraList /></Protected>}
+        /> */}
       </Routes>
     </Router>
   );
 };
+
 export default App;
