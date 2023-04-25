@@ -86,8 +86,8 @@ const LoginForm: React.FC<Props> = ({ title }) => {
 
   const inputs = formMode === FormMode.SignIn ? signInInputs : signUpInputs;
   return (
-    <div className="font-sans max-w-md mx-auto rounded-lg overflow-hidden bg-opacity-75 backdrop-filter backdrop-blur-md backdrop-saturate-150" style={{ fontFamily: 'Roboto' }}>
-      <div className="px-4 py-2 shadow-md backdrop-shadow-md rounded-lg bg-gradient-to-br from-black via-gray-800 to-gray-300">
+    <div className="font-sans max-w-md mx-auto rounded-lg overflow-hidden bg-opacity-75 backdrop-filter backdrop-blur-md backdrop-saturate-150" style={{ fontFamily: 'Roboto', backgroundImage: 'linear-gradient(to bottom right, #050505, #cccccc)' }}>
+      <div className="px-4 py-2 shadow-md backdrop-shadow-md rounded-lg">
         <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
         <form className="mt-4" onSubmit={handleSubmit}>
           {inputs.map(input => (
@@ -99,11 +99,12 @@ const LoginForm: React.FC<Props> = ({ title }) => {
                 type={input.type}
                 name={input.name}
                 id={input.name}
-                className="bg-transparent border border-white rounded-md py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline backdrop-blur-md backdrop-saturate-150"
+                className="bg-white border border-white rounded-md py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline backdrop-blur-md backdrop-saturate-150"
                 value={formFields.find(field => field.name === input.name)?.value}
                 onChange={handleInputChange}
                 required
                 placeholder=" "
+
               />
             </div>
           ))}
@@ -142,6 +143,5 @@ const LoginForm: React.FC<Props> = ({ title }) => {
       </div>
     </div>
   );
-
 };
 export default LoginForm

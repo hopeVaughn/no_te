@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
 
   // Render the component UI
   return (
-    <div>
+    <div style={{ height: '100vh', backgroundColor: 'white' }}>
       <h1>Dashboard</h1>
       <CameraList />
     </div>

@@ -12,8 +12,6 @@ const App: React.FC = () => {
   const logIn = async () => {
     try {
       const response = await authenticate('/signin', {});
-      console.log(response);
-
       setisLoggedIn(true);
     } catch (error) {
       if (error instanceof Error) {
@@ -30,7 +28,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginForm title="" logIn={logIn} />} />
+        <Route path="/" element={<div className="flex justify-center items-center h-screen"><LoginForm title="" logIn={logIn} /></div>} />
         <Route path="/dashboard" element={<Protected isLoggedIn={isLoggedIn}><Dashboard /></Protected>} />
         <Route path="/cameras" element={<Protected isLoggedIn={isLoggedIn}><CameraList /></Protected>} />
       </Routes>
