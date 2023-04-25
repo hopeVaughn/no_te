@@ -1,5 +1,5 @@
 import { NextFunction, RequestHandler } from 'express';
-import { AuthenticatedRequest } from '../modules/auth';
+import { AuthenticatedRequest } from './modules/auth';
 import { CameraStatus } from '@prisma/client';
 import prisma from '../db';
 

@@ -1,6 +1,6 @@
 // Import necessary modules and functions
 import { Router, Request, Response, NextFunction } from "express";
-import { ensureAdmin } from './modules/auth';
+import { ensureAdmin } from './handlers/modules/auth';
 import {
   getAllUsers,
   getUserById,
@@ -15,7 +15,7 @@ import {
   acknowledgeAlert
 } from './handlers/index';
 import { body, param } from 'express-validator';
-import { handleInputErrors } from './modules/middleware';
+import { handleInputErrors } from './handlers/modules/middleware';
 
 // Create a new Express Router instance
 const router = Router();

@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import prisma from '../db';
 import { User } from '@prisma/client';
-import { comparePasswords, createJWT, hashPassword, AuthenticatedRequest } from '../modules/auth';
+import { comparePasswords, createJWT, hashPassword, AuthenticatedRequest } from './modules/auth';
 
 // Request handler to create a new user
 export const createNewUser: RequestHandler = async (req, res, next) => {

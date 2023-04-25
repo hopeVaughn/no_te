@@ -1,6 +1,6 @@
 import { NextFunction, RequestHandler } from 'express';
 import prisma from '../db';
-import { AuthenticatedRequest } from '../modules/auth';
+import { AuthenticatedRequest } from './modules/auth';
 import { Alert, AlertType, Camera } from '@prisma/client';
 
 // Define an interface for the request body of the `processCameraAlert` handler

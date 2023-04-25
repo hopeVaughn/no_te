@@ -12,6 +12,8 @@ const App: React.FC = () => {
   const logIn = async () => {
     try {
       const response = await authenticate('/signin', {});
+      console.log(response);
+
       setisLoggedIn(true);
     } catch (error) {
       if (error instanceof Error) {
@@ -24,9 +26,6 @@ const App: React.FC = () => {
   const logOut = () => {
     setisLoggedIn(false);
   };
-
-  // Redirect to the dashboard route if the user is authenticated
-
 
   return (
     <Router>

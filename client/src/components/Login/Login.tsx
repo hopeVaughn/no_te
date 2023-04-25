@@ -42,6 +42,7 @@ const LoginForm: React.FC<Props> = ({ title }) => {
       );
 
       const response = await authenticate(endpoint, data);
+      console.log(response);
 
 
       // Handle successful login or registration
