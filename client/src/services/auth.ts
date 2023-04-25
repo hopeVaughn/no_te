@@ -8,23 +8,18 @@ const apiClient = axios.create({
   withCredentials: true,
 });
 
-// Get the JWT token from the cookies using document.cookie
-const token = document.cookie
-  .split('; ')
-  .find(row => row.startsWith('token='))
-  ?.split('=')[1];
-
-// Add the Authorization header to the apiClient instance if the token is defined
-if (token) {
-  apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-}
-
 export const authenticate = async (
   endpoint: string,
   data: Record<string, string>
 ) => {
   try {
     const response = await apiClient.post(endpoint, data);
+
+    // Set the Authorization header with the token value from the response
+    if (response.data.token) {
+      apiClient.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+    }
+
     return response.data;
   } catch (error) {
     if (error instanceof Error) {

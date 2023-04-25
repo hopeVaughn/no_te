@@ -8,6 +8,7 @@ import { createNewUser, signin } from './handlers/user'
 const app = express();
 
 //--MiddleWare
+app.use(cookieParser())
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true,
@@ -15,7 +16,6 @@ app.use(cors({
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
 //--End of MiddleWare
 
 app.get('/', (req, res) => {
@@ -27,10 +27,6 @@ app.get('/', (req, res) => {
 app.use('/api', protect, router)
 app.post('/user', createNewUser)
 app.post('/signin', signin)
-// Add an endpoint to check if the user is authenticated
-app.get('/auth/check', protect, (req, res) => {
-  res.json({ isLoggedIn: true });
-});
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   if (err.type === 'auth') {
