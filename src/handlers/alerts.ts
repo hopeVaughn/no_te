@@ -12,6 +12,8 @@ export interface CameraAlert {
 
 // This handler expects a POST request containing a JSON object with `cameraId`, `alertType`, and `detectedAt` properties.
 export const processCameraAlert: RequestHandler = async (req, res, next: NextFunction) => {
+  console.log(req.body);
+
   // Extract the necessary data from the request body
   const { cameraId, alertType, detectedAt }: CameraAlert = req.body;
 

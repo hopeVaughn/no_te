@@ -69,8 +69,7 @@ router.get('/alerts', getAllAlerts);
 // Route to process a new camera alert
 router.post('/alerts',
   body('cameraId').isUUID(),
-  body('timestamp').isISO8601(),
-  body('imageUrl').isString(),
+  body('detectedAt').isISO8601(),
   body('alertType').isIn(['MOTION', 'SOUND']),
   handleInputErrors,
   processCameraAlert);

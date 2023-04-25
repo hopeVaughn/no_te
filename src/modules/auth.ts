@@ -37,7 +37,7 @@ export const protect: RequestHandler = (req: AuthenticatedRequest, res, next) =>
   // If the authorization header is not present, return an unauthorized error
   if (!bearer) {
     res.status(401);
-    res.json({ message: 'not authorized' });
+    res.json({ message: 'not authorized: no bearer' });
     return;
   }
 
@@ -47,13 +47,14 @@ export const protect: RequestHandler = (req: AuthenticatedRequest, res, next) =>
   // If the token is not present, return an unauthorized error
   if (!token) {
     res.status(401);
-    res.json({ message: 'not authorized' });
+    res.json({ message: 'not authorized: no token' });
     return;
   }
 
   try {
     // Verify the token using the secret key and add the decoded user to the request object
     const user = jwt.verify(token, process.env.JWT_SECRET as Secret) as User;
+    console.log('Decoded user:', user);
     req.user = user;
     // Proceed to the next middleware or route handler
     next();
@@ -65,7 +66,6 @@ export const protect: RequestHandler = (req: AuthenticatedRequest, res, next) =>
     return;
   }
 };
-
 // Middleware function to ensure the authenticated user is an admin
 export const ensureAdmin: RequestHandler = (req: AuthenticatedRequest, res, next) => {
   // Check if the authenticated user has the role of 'ADMIN'
