@@ -12,7 +12,7 @@ import {
   getAllAlerts,
   processCameraAlert,
   getAlertById,
-  acknowledgeAlert
+  // acknowledgeAlert
 } from './handlers/index';
 import { body, param } from 'express-validator';
 import { handleInputErrors } from './handlers/modules/middleware';
@@ -78,7 +78,7 @@ router.post('/alerts',
 router.get('/alerts/:id', param('id').isUUID(), handleInputErrors, getAlertById);
 
 // Route to acknowledge an alert by its ID
-router.put('/alerts/:id/acknowledge', param('id').isUUID(), handleInputErrors, acknowledgeAlert);
+router.put('/alerts/:id/acknowledge', param('id').isUUID(), handleInputErrors);
 
 // Error handling middleware
 router.use((err: any, req: Request, res: Response, next: NextFunction) => {

@@ -1,6 +1,6 @@
 import { NextFunction, RequestHandler } from 'express';
 import prisma from '../db';
-import { AuthenticatedRequest } from './modules/auth';
+// import { AuthenticatedRequest } from './modules/auth';
 import { Alert, AlertType, Camera } from '@prisma/client';
 
 // Define an interface for the request body of the `processCameraAlert` handler
@@ -53,54 +53,54 @@ export const processCameraAlert: RequestHandler = async (req, res, next: NextFun
 
 
 // This handler expects a PUT request with a URL parameter (`id`) specifying the ID of the alert to be acknowledged.
-export const acknowledgeAlert: RequestHandler = async (req: AuthenticatedRequest, res, next: NextFunction) => {
-  // Extract the alert ID from the URL parameter
-  const id = req.params.id;
+// export const acknowledgeAlert: RequestHandler = async (req, res, next: NextFunction) => {
+//   // Extract the alert ID from the URL parameter
+//   const id = req.params.id;
 
-  // Validate the request data
-  if (!id) {
-    res.status(400);
-    res.json({ message: 'Invalid request data' });
-    return;
-  }
+//   // Validate the request data
+//   if (!id) {
+//     res.status(400);
+//     res.json({ message: 'Invalid request data' });
+//     return;
+//   }
 
-  // Check if the alert exists
-  const alert = await prisma.alert.findUnique({
-    where: { id },
-  });
+//   // Check if the alert exists
+//   const alert = await prisma.alert.findUnique({
+//     where: { id },
+//   });
 
-  // Return an error response if the alert is not found
-  if (!alert) {
-    res.status(404);
-    res.json({ message: 'Alert not found' });
-    return;
-  }
+//   // Return an error response if the alert is not found
+//   if (!alert) {
+//     res.status(404);
+//     res.json({ message: 'Alert not found' });
+//     return;
+//   }
 
-  // Return an error response if the alert has already been acknowledged
-  if (alert.acknowledged) {
-    res.status(400);
-    res.json({ message: 'Alert already acknowledged' });
-    return;
-  }
+//   // Return an error response if the alert has already been acknowledged
+//   if (alert.acknowledged) {
+//     res.status(400);
+//     res.json({ message: 'Alert already acknowledged' });
+//     return;
+//   }
 
-  // Update the alert record in the database
-  const updatedAlert = await prisma.alert.update({
-    where: { id },
-    data: {
-      acknowledged: true,
-      acknowledgedBy: { connect: { id: req.user.id } },
-      acknowledgedAt: new Date(),
-    },
-  });
+//   // Update the alert record in the database
+//   const updatedAlert = await prisma.alert.update({
+//     where: { id },
+//     data: {
+//       acknowledged: true,
+//       acknowledgedBy: { connect: { id: req.user.id } },
+//       acknowledgedAt: new Date(),
+//     },
+//   });
 
-  // Return the updated alert record
-  res.status(200);
-  res.json(updatedAlert);
-};
+//   // Return the updated alert record
+//   res.status(200);
+//   res.json(updatedAlert);
+// };
 
 
 // This handler expects a GET request and returns all alert records in the database.
-export const getAllAlerts: RequestHandler = async (req: AuthenticatedRequest, res, next: NextFunction) => {
+export const getAllAlerts: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     // Query all alert records and include associated camera and acknowledgedBy data
     const alerts = await prisma.alert.findMany({
