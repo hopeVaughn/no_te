@@ -99,7 +99,7 @@ const LoginForm: React.FC<Props> = ({ title }) => {
                 type={input.type}
                 name={input.name}
                 id={input.name}
-                className="bg-white border border-white rounded-md py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline backdrop-blur-md backdrop-saturate-150"
+                className="bg-white border border-white rounded-md py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline backdrop-blur-md backdrop-saturate-150"
                 value={formFields.find(field => field.name === input.name)?.value}
                 onChange={handleInputChange}
                 required
