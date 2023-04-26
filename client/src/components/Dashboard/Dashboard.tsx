@@ -1,13 +1,7 @@
 import { useEffect } from 'react';
 import { cameraEventSystem } from '../../utils/eventSystem';
-import { simulateDetection } from '../../services/camera';
 import CameraList from '../Camera/CameraList';
 import { UserPropsWithLogout } from '../../App';
-
-// Define the Camera interface
-interface Camera {
-  id: string;
-}
 
 // Define the CameraEventDetail interface
 interface CameraEventDetail {

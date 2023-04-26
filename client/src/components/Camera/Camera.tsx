@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Camera as CameraType, AlertType } from '../../types';
 import { cameraEventSystem, CameraEventDetail } from '../../utils/eventSystem';
 import CameraModal from '../Modal/CameraModal';
+import { simulateDetection } from '../../services/camera'; // Import the function
 
 interface CameraProps {
   camera: CameraType;
@@ -34,6 +35,13 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
       cameraEventSystem.removeEventListener('cameraEvent', handleCameraEvent);
     };
   }, [camera.id]);
+
+  useEffect(() => {
+    if (camera.status === "ONLINE") {
+      simulateDetection(camera.id);
+    }
+  }, [camera.id, camera.status]);
+
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
