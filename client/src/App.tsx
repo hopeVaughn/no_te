@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginForm from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import Protected from './components/Protected/Protected';
-import { authenticate } from './services/auth';
 
 export type UserProps = {
   id: string;
@@ -13,7 +12,6 @@ export type UserProps = {
 export interface UserPropsWithLogout extends UserProps {
   handleLogout: () => void;
 }
-
 
 const App: React.FC = () => {
   const [isLoggedIn, setisLoggedIn] = useState<boolean | null>(null);
@@ -28,6 +26,8 @@ const App: React.FC = () => {
       if (response) {
         setUser(response.user);
         setisLoggedIn(true);
+        const user = { id: response.user.id, username: response.user.username, role: response.user.role };
+        localStorage.setItem('user', JSON.stringify(user));
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -38,6 +38,7 @@ const App: React.FC = () => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('user');
     setisLoggedIn(false);
   };
 
@@ -48,7 +49,7 @@ const App: React.FC = () => {
           path="/"
           element={
             <div className="flex justify-center items-center h-screen">
-              <LoginForm title="" handleLogin={handleLogin} />
+              <LoginForm handleLogin={handleLogin} />
             </div>
           }
         />

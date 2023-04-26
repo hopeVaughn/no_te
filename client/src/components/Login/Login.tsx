@@ -3,7 +3,6 @@ import { authenticate } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  title: string;
   handleLogin: (response: any) => void;
 }
 
@@ -22,7 +21,7 @@ enum FormMode {
   SignUp,
 }
 
-const LoginForm: React.FC<Props> = ({ title, handleLogin }) => {
+const LoginForm: React.FC<Props> = ({ handleLogin }) => {
   const [formMode, setFormMode] = useState(FormMode.SignIn);
   const [formFields, setFormFields] = useState<FormField[]>([
     { label: 'Username', type: 'text', name: 'username', value: '' },
@@ -89,7 +88,6 @@ const LoginForm: React.FC<Props> = ({ title, handleLogin }) => {
   return (
     <div className="font-sans max-w-md mx-auto rounded-lg overflow-hidden bg-opacity-75 backdrop-filter backdrop-blur-md backdrop-saturate-150" style={{ fontFamily: 'Roboto', backgroundImage: 'linear-gradient(to bottom right, #050505, #cccccc)' }}>
       <div className="px-4 py-2 shadow-md backdrop-shadow-md rounded-lg">
-        <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
         <form className="mt-4" onSubmit={handleSubmit}>
           {inputs.map(input => (
             <div key={input.name} className="mb-4">
