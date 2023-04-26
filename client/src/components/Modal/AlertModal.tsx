@@ -7,7 +7,7 @@ interface AlertModalProps {
   onClose: () => void;
 }
 export interface AlertWithAcknowledgedBy extends Alert {
-  acknowledgedBy?: User
+  acknowledgedBy?: User;
 }
 const AlertModal: React.FC<AlertModalProps> = ({ camera, onClose }) => {
   const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null);
@@ -22,7 +22,6 @@ const AlertModal: React.FC<AlertModalProps> = ({ camera, onClose }) => {
   useEffect(() => {
     fetchAlertsData();
     console.log('fetched alerts:', alerts);
-
   }, [camera.id]);
 
   useEffect(() => {
@@ -47,18 +46,27 @@ const AlertModal: React.FC<AlertModalProps> = ({ camera, onClose }) => {
         {alerts.length === 0 ? (
           <p>No alerts for this camera.</p>
         ) : (
-          <div className="overflow-auto" style={{ maxHeight: '300px' }}>
+          <div className="overflow-y-auto" style={{ maxHeight: '300px' }}>
             {alerts.map((alert) => (
               <div
                 key={alert.id}
-                className={`p-2 mb-2 border-l-4 ${alert === selectedAlert ? 'border-red-600 bg-red-100' : 'border-gray-300'
+                className={`p-2 mb-2 border-l-4 flex justify-between items-center ${alert === selectedAlert ? 'border-red-600 bg-red-100' : 'border-gray-300'
                   }`}
                 onClick={() => setSelectedAlert(alert)}
               >
-                <p className="text-sm">{alert.alertType} detected at {alert.detectedAt.toLocaleString()}</p>
-                {alert.acknowledged && (
-                  <p className="text-xs mt-1 text-gray-500">Acknowledged by {alert.acknowledgedBy?.userId}</p>
-
+                <div>
+                  <p className="text-sm">{alert.alertType} detected at {alert.detectedAt.toLocaleString()}</p>
+                  {alert.acknowledged && (
+                    <p className="text-xs mt-1 text-gray-500">Acknowledged by {alert.acknowledgedBy?.userId}</p>
+                  )}
+                </div>
+                {!alert.acknowledged && (
+                  <button
+                    className="bg-red-600 text-white px-4 py-2 rounded"
+                    onClick={() => handleAcknowledged(alert)}
+                  >
+                    Acknowledge
+                  </button>
                 )}
               </div>
             ))}
