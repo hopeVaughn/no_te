@@ -10,7 +10,7 @@ async function main() {
         name: `Camera ${i}`,
         location: `Location ${i}`,
         status: i % 2 === 0 ? CameraStatus.ONLINE : CameraStatus.OFFLINE,
-        videoUrl: `http://example.com/video${i}`,
+        videoUrl: `https://www.youtube.com/watch?v=dQw4w9WgXcQ`,
       },
     });
   }

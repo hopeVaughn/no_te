@@ -29,11 +29,6 @@ const Dashboard: React.FC<UserPropsWithLogout> = ({ id, username, role, handleLo
     // Add event listener for camera events
     cameraEventSystem.addEventListener('cameraEvent', handleCameraEvent);
 
-    // Call simulateDetection for each camera
-    // cameras.forEach((camera) => {
-    //   simulateDetection(camera.id);
-    // });
-
     return () => {
       cameraEventSystem.removeEventListener('cameraEvent', handleCameraEvent);
     };
@@ -44,17 +39,15 @@ const Dashboard: React.FC<UserPropsWithLogout> = ({ id, username, role, handleLo
   return (
     <div className="h-full bg-transparent min-h-screen flex flex-col">
       <nav className="bg-gray-800 text-white p-4 flex justify-between items-center">
-        <div className="text-lg font-bold">N.O.T.E</div>
-        <div className="text-sm flex items-center">
-          Logged in as: {username}
-          <div className="ml-4">
-            <button
-              onClick={handleLogout}
-              className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
-            >
-              Logout
-            </button>
-          </div>
+        <span className="text-xl font-bold">N.O.T.E</span>
+        <div className="flex items-center">
+          <span className="mr-4">Logged in as: {username}</span>
+          <button
+            className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
       </nav>
       <div className="flex-grow p-4 md:p-8 lg:p-12">

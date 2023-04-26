@@ -14,6 +14,8 @@ export type UserProps = {
 export interface UserPropsWithLogout extends UserProps {
   handleLogout: () => void;
 }
+
+
 const App: React.FC = () => {
   const [isLoggedIn, setisLoggedIn] = useState<boolean | null>(null);
   const [user, setUser] = useState<UserProps>({
@@ -55,10 +57,6 @@ const App: React.FC = () => {
           path="/dashboard"
           element={<Protected isLoggedIn={isLoggedIn}><Dashboard id={user.id} username={user.username} role={user.role} handleLogout={handleLogout} /></Protected>}
         />
-        {/* <Route
-          path="/cameras"
-          element={<Protected isLoggedIn={isLoggedIn}><CameraList /></Protected>}
-        /> */}
       </Routes>
     </Router>
   );
