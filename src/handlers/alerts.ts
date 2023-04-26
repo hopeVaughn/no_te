@@ -118,6 +118,36 @@ export const getAllAlerts: RequestHandler = async (req: AuthenticatedRequest, re
   }
 };
 
+// This handler expects a GET request with a URL parameter (`cameraId`) specifying the ID of the camera to retrieve alerts for.
+// This handler expects a GET request with a URL parameter (`cameraId`) specifying the ID of the camera to retrieve alerts for.
+export const getAlertsByCameraId: RequestHandler = async (req: AuthenticatedRequest, res, next: NextFunction) => {
+  // Extract the camera ID from the URL parameter
+  const cameraId = req.params.cameraId;
+
+  // Validate the request data
+  if (!cameraId) {
+    res.status(400);
+    res.json({ message: 'Invalid request data' });
+    return;
+  }
+
+  try {
+    // Query all alert records associated with the specified camera and include associated camera and acknowledgedBy data
+    const alerts = await prisma.alert.findMany({
+      where: { cameraId },
+      include: {
+        camera: true,
+      },
+    });
+
+    // Return the alert records
+    res.status(200).json(alerts);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Error fetching alerts' });
+  }
+};
+
 
 // This handler expects a GET request with a URL parameter (`id`) specifying the ID of the alert to retrieve.
 export const getAlertById: RequestHandler = async (req: AuthenticatedRequest, res) => {

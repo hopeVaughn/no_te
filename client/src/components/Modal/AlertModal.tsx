@@ -1,16 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Camera } from '../../types';
-import { updateAlert } from '../../services/alert';
+import { Alert, Camera, User } from '../../types';
+import { updateAlert, fetchAlerts } from '../../services/alert';
 
 interface AlertModalProps {
   camera: Camera;
-  alerts: Alert[];
   onClose: () => void;
 }
-
-const AlertModal: React.FC<AlertModalProps> = ({ camera, alerts, onClose }) => {
+export interface AlertWithAcknowledgedBy extends Alert {
+  acknowledgedBy?: User
+}
+const AlertModal: React.FC<AlertModalProps> = ({ camera, onClose }) => {
   const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null);
-  const userId = localStorage.getItem('user');
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const userId = JSON.parse(localStorage.getItem('user') || '').id;
+
+  const fetchAlertsData = async () => {
+    const alertsData = await fetchAlerts(camera.id);
+    setAlerts(alertsData);
+  };
+
+  useEffect(() => {
+    fetchAlertsData();
+    console.log('fetched alerts:', alerts);
+
+  }, [camera.id]);
+
   useEffect(() => {
     // Reset the selected alert when the modal is closed
     if (!selectedAlert) {
@@ -20,9 +34,10 @@ const AlertModal: React.FC<AlertModalProps> = ({ camera, alerts, onClose }) => {
 
   const handleAcknowledged = async (alert: Alert) => {
     // Update the alert as acknowledged
-    await updateAlert(alert.id, { acknowledged: true }, userId as string);
+    await updateAlert(alert.id, { acknowledged: true }, userId);
     // Remove the acknowledged alert from the state
     setSelectedAlert(null);
+    setAlerts(alerts.filter((a) => a.id !== alert.id));
   };
 
   return (
@@ -42,7 +57,8 @@ const AlertModal: React.FC<AlertModalProps> = ({ camera, alerts, onClose }) => {
               >
                 <p className="text-sm">{alert.alertType} detected at {alert.detectedAt.toLocaleString()}</p>
                 {alert.acknowledged && (
-                  <p className="text-xs mt-1 text-gray-500">Acknowledged by {alert.acknowledgedBy?.username}</p>
+                  <p className="text-xs mt-1 text-gray-500">Acknowledged by {alert.acknowledgedBy?.userId}</p>
+
                 )}
               </div>
             ))}

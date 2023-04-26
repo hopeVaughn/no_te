@@ -31,7 +31,7 @@ const Dashboard: React.FC<UserPropsWithLogout> = ({ handleLogout }) => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const user = JSON.parse(storedUser);
-      console.log(user.username);
+      // console.log(user.username);
     }
   }, []);
 

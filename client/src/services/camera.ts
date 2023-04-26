@@ -20,8 +20,8 @@ if (token) {
 
 // Add some console logs to check the request headers
 apiClient.interceptors.request.use(config => {
-  console.log('Request headers:', config.headers);
-  console.log('Authorization header:', config.headers['Authorization']);
+  // console.log('Request headers:', config.headers);
+  // console.log('Authorization header:', config.headers['Authorization']);
   return config;
 });
 

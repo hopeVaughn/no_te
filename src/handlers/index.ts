@@ -1,5 +1,5 @@
 import { createNewUser, signin, getAllUsers, getUserById } from "./user";
-import { processCameraAlert, getAllAlerts, getAlertById } from "./alerts"
+import { processCameraAlert, getAllAlerts, getAlertById, getAlertsByCameraId } from "./alerts"
 import { addCamera, getAllCameras, getCameraById, updateCamera, deleteCamera } from './camera'
 
 export {
@@ -14,5 +14,6 @@ export {
   updateCamera,
   deleteCamera,
   getAllUsers,
-  getUserById
+  getUserById,
+  getAlertsByCameraId
 }

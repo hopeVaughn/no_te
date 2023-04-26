@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Camera as CameraType, AlertType } from '../../types';
 import { cameraEventSystem, CameraEventDetail } from '../../utils/eventSystem';
 import CameraModal from '../Modal/CameraModal';
-import { simulateDetection } from '../../services/camera'; // Import the function
+import { simulateDetection } from '../../services/camera';
+import AlertModal from '../Modal/AlertModal';
 
 interface CameraProps {
   camera: CameraType;
@@ -15,33 +16,33 @@ interface Alert {
 
 const Camera: React.FC<CameraProps> = ({ camera }) => {
   const [latestAlert, setLatestAlert] = useState<Alert | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string>(camera.videoUrl);
 
-  // useEffect(() => {
-  //   const handleCameraEvent: EventListenerOrEventListenerObject = (event) => {
-  //     const customEvent = event as CustomEvent<CameraEventDetail>;
-  //     if (customEvent.detail.cameraId === camera.id) {
-  //       setLatestAlert({
-  //         eventType: customEvent.detail.eventType,
-  //         detectedAt: new Date(customEvent.detail.detectedAt),
-  //       });
-  //     }
-  //   };
+  useEffect(() => {
+    const handleCameraEvent: EventListenerOrEventListenerObject = (event) => {
+      const customEvent = event as CustomEvent<CameraEventDetail>;
+      if (customEvent.detail.cameraId === camera.id) {
+        setLatestAlert({
+          eventType: customEvent.detail.eventType,
+          detectedAt: new Date(customEvent.detail.detectedAt),
+        });
+      }
+    };
 
-  //   cameraEventSystem.addEventListener('cameraEvent', handleCameraEvent);
+    cameraEventSystem.addEventListener('cameraEvent', handleCameraEvent);
 
-  //   return () => {
-  //     cameraEventSystem.removeEventListener('cameraEvent', handleCameraEvent);
-  //   };
-  // }, [camera.id]);
+    return () => {
+      cameraEventSystem.removeEventListener('cameraEvent', handleCameraEvent);
+    };
+  }, [camera.id]);
 
-  // useEffect(() => {
-  //   if (camera.status === "ONLINE") {
-  //     simulateDetection(camera.id);
-  //   }
-  // }, [camera.id, camera.status]);
-
+  useEffect(() => {
+    if (camera.status === "ONLINE") {
+      simulateDetection(camera.id);
+    }
+  }, [camera.id, camera.status]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -51,28 +52,38 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
     setIsModalOpen(false);
   };
 
+  const handleViewAlerts = () => {
+    setIsAlertModalOpen(true);
+  };
+
+  const handleCloseAlertModal = () => {
+    setIsAlertModalOpen(false);
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md p-4 mb-4 overflow-hidden">
       <h2 className="text-lg font-medium mb-2">{camera.name}</h2>
       <p className="text-gray-500 mb-2">Location: {camera.location}</p>
       <p className="text-gray-500 mb-2">Status: {camera.status}</p>
-      <button className="text-blue-500 hover:underline mb-2" onClick={handleOpenModal}>
-        View Camera Feed
-      </button>
-      {latestAlert && (
-        <div className="bg-red-100 text-red-700 p-2 rounded-md mb-2">
-          <p className="text-sm">
-            Latest Alert: {latestAlert.eventType} detected at{' '}
-            {latestAlert.detectedAt.toLocaleString()}
-          </p>
-        </div>
-      )}
+      <div className="mb-2">
+        <button className="text-blue-500 hover:underline mr-4" onClick={handleOpenModal}>
+          View Camera Feed
+        </button>
+        {latestAlert && (
+          <button className="text-red-500 hover:underline" onClick={handleViewAlerts}>
+            View Alerts
+          </button>
+        )}
+      </div>
       {isModalOpen && (
         <CameraModal videoUrl={videoUrl} onClose={handleCloseModal} />
       )}
-
+      {isAlertModalOpen && (
+        <AlertModal camera={camera} onClose={handleCloseAlertModal} />
+      )}
     </div>
   );
+
 };
 
-export default Camera;
+export default Camera
