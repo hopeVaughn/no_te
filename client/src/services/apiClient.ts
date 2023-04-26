@@ -1,4 +1,3 @@
-// src/services/apiClient.ts
 import axios from 'axios';
 import { getCookie } from '../utils/cookie';
 

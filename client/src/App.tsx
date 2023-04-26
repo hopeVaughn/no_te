@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import CameraList from './components/Camera/CameraList';
 import LoginForm from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import Protected from './components/Protected/Protected';

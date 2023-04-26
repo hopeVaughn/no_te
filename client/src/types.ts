@@ -14,6 +14,7 @@ export interface Alert {
   alertType: AlertType;
   detectedAt: Date;
   acknowledged: boolean;
+  acknowledgedBy?: string;
   userId?: string;
   acknowledgedAt?: Date;
 }
@@ -26,4 +27,9 @@ export enum CameraStatus {
 export enum AlertType {
   MOTION = 'MOTION',
   SOUND = 'SOUND',
+}
+
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  OPERATOR = "OPERATOR"
 }

@@ -26,7 +26,7 @@ apiClient.interceptors.request.use(config => {
 });
 
 export async function simulateDetection(cameraId: string) {
-  const randomInterval = Math.floor(Math.random() * 10000) + 5000;
+  const randomInterval = Math.floor(Math.random() * 10000) + 30000;
 
   setTimeout(async () => {
     const eventType = Math.random() > 0.5 ? AlertType.MOTION : AlertType.SOUND;

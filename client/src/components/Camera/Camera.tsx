@@ -18,29 +18,29 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string>(camera.videoUrl);
 
-  useEffect(() => {
-    const handleCameraEvent: EventListenerOrEventListenerObject = (event) => {
-      const customEvent = event as CustomEvent<CameraEventDetail>;
-      if (customEvent.detail.cameraId === camera.id) {
-        setLatestAlert({
-          eventType: customEvent.detail.eventType,
-          detectedAt: new Date(customEvent.detail.detectedAt),
-        });
-      }
-    };
+  // useEffect(() => {
+  //   const handleCameraEvent: EventListenerOrEventListenerObject = (event) => {
+  //     const customEvent = event as CustomEvent<CameraEventDetail>;
+  //     if (customEvent.detail.cameraId === camera.id) {
+  //       setLatestAlert({
+  //         eventType: customEvent.detail.eventType,
+  //         detectedAt: new Date(customEvent.detail.detectedAt),
+  //       });
+  //     }
+  //   };
 
-    cameraEventSystem.addEventListener('cameraEvent', handleCameraEvent);
+  //   cameraEventSystem.addEventListener('cameraEvent', handleCameraEvent);
 
-    return () => {
-      cameraEventSystem.removeEventListener('cameraEvent', handleCameraEvent);
-    };
-  }, [camera.id]);
+  //   return () => {
+  //     cameraEventSystem.removeEventListener('cameraEvent', handleCameraEvent);
+  //   };
+  // }, [camera.id]);
 
-  useEffect(() => {
-    if (camera.status === "ONLINE") {
-      simulateDetection(camera.id);
-    }
-  }, [camera.id, camera.status]);
+  // useEffect(() => {
+  //   if (camera.status === "ONLINE") {
+  //     simulateDetection(camera.id);
+  //   }
+  // }, [camera.id, camera.status]);
 
 
   const handleOpenModal = () => {
@@ -76,9 +76,3 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
 };
 
 export default Camera;
-
-
-
-
-
-{/* <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> */ }
