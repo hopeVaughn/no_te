@@ -87,7 +87,7 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
           </button>
         )}
       </div>
-      // Render modals based on modal state
+      {/* // Render modals based on modal state */}
       {isModalOpen && (
         <CameraModal videoUrl={videoUrl} onClose={handleCloseModal} />
       )}

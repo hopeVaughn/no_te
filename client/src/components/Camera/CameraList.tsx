@@ -3,7 +3,7 @@ import Camera from './Camera';
 import { CameraStatus, Camera as CameraType } from '../../types';
 import { getAllCameras } from '../../services/cameraService';
 
-// The CameraList component
+
 const CameraList: React.FC = () => {
   // Initialize state variables for cameras, showAllCameras flag, and loading status
   const [cameras, setCameras] = useState<CameraType[]>([]);
