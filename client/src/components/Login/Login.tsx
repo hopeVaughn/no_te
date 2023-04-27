@@ -36,9 +36,12 @@ const LoginForm: React.FC<Props> = ({ handleLogin }) => {
     { label: 'First Name', type: 'text', name: 'firstName', value: '' },
     { label: 'Last Name', type: 'text', name: 'lastName', value: '' },
   ]);
+  const [loginError, setLoginError] = useState('');
+
+
+
   const navigate = useNavigate();
 
-  // Form submission handler
   // Form submission handler
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -85,6 +88,7 @@ const LoginForm: React.FC<Props> = ({ handleLogin }) => {
       }
     } catch (error) {
       if (error instanceof Error) {
+        setLoginError('Invalid credentials. Please try again.');
         throw new Error(error.message);
       }
       console.error('Unhandled error: ', error);
@@ -153,6 +157,9 @@ const LoginForm: React.FC<Props> = ({ handleLogin }) => {
           >
             {formMode === FormMode.SignIn ? 'Sign In' : 'Sign Up'}
           </button>
+          {formMode === FormMode.SignIn && loginError && (
+            <p className="text-red-500">{loginError}</p>
+          )}
           <div className="mt-4">
             {formMode === FormMode.SignIn ? (
               <p>
