@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { authenticate } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
-
+import apiClient from '../../services/apiClient';
+import { FormData } from '../../types';
 // Prop type definition for the LoginForm component
 interface Props {
   handleLogin: (response: any) => void;
@@ -38,22 +39,49 @@ const LoginForm: React.FC<Props> = ({ handleLogin }) => {
   const navigate = useNavigate();
 
   // Form submission handler
+  // Form submission handler
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      const endpoint = formMode === FormMode.SignIn ? '/signin' : '/user';
-      const data = formFields.reduce(
+      const data: FormData = formFields.reduce<FormData>(
         (data, field) => ({ ...data, [field.name]: field.value }),
-        {}
+        { username: '', password: '', email: '', firstName: '', lastName: '' }
       );
 
-      const response = await authenticate(endpoint, data);
+      // Remove optional fields if they are undefined
+      const filteredData: Record<string, string> = Object.fromEntries(
+        Object.entries(data).filter(([_, value]) => value !== undefined)
+      );
 
-      // Handle successful login or registration
-      if (response) {
-        handleLogin(response);
-        navigate('/dashboard');
+      if (formMode === FormMode.SignUp) {
+        const createUserResponse = await apiClient.post('/user', filteredData);
+
+        if (createUserResponse.status === 200) {
+          // User created successfully, now sign in
+          const signInData: Record<string, string> = {
+            username: data.username,
+            password: data.password,
+            email: data.email || '',
+            firstName: data.firstName || '',
+            lastName: data.lastName || '',
+          };
+
+          const response = await authenticate('/signin', signInData);
+
+          if (response) {
+            handleLogin(response);
+            navigate('/dashboard');
+          }
+        }
+      } else {
+        // Form mode is FormMode.SignIn
+        const response = await authenticate('/signin', filteredData);
+
+        if (response) {
+          handleLogin(response);
+          navigate('/dashboard');
+        }
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -62,6 +90,8 @@ const LoginForm: React.FC<Props> = ({ handleLogin }) => {
       console.error('Unhandled error: ', error);
     }
   };
+
+
 
   // Handler for change in input field
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

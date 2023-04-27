@@ -27,7 +27,7 @@ const App: React.FC = () => {
   });
 
   // Function to handle login
-  const handleLogin = async (response: any) => {
+  const handleLogin = (response: any) => {
     try {
       if (response) {
         // Set user state
