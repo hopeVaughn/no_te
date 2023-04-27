@@ -100,7 +100,9 @@ Afterwards you can:
 1. Clone the repository:
   
   - git clone https://github.com/hopeVaughn/no_te
-  - cd no_te
+
+      Move into the cloned dir
+       - cd no_te (or whatever the dir name you have designated)
 
 2. Install dependencies:
   
