@@ -9,10 +9,7 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
 - [Running Tests](#running-tests)
-- [Deployment](#deployment)
 - [Built With](#built-with)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -123,14 +120,9 @@ The application will be available at `http://localhost:3000`.
 
 ## `Running Tests`
 
-  * To run the tests for the backend, run the following command in the project root:
+  * Currently there are only test for the back end. To run the tests for the backend, run the following command in the project root:
 
   - npm test
-
-  
-## `Deployment`
-
-Deployment instructions will depend on your chosen hosting provider. Please refer to their specific documentation for deploying Node.js and React applications.
 
 ## `Built With`
 

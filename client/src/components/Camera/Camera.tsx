@@ -5,25 +5,32 @@ import CameraModal from '../Modal/CameraModal';
 import { simulateDetection } from '../../services/camera';
 import AlertModal from '../Modal/AlertModal';
 
+// Define the types for the component props
 interface CameraProps {
   camera: CameraType;
 }
 
+// Define the types for the alert state
 interface Alert {
   eventType: AlertType;
   detectedAt: Date;
 }
 
 const Camera: React.FC<CameraProps> = ({ camera }) => {
+  // Initialize state variables for latest alert, modal states and videoUrl
   const [latestAlert, setLatestAlert] = useState<Alert | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isAlertModalOpen, setIsAlertModalOpen] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string>(camera.videoUrl);
 
+  // UseEffect to listen for camera events
   useEffect(() => {
+    // Event listener function
     const handleCameraEvent: EventListenerOrEventListenerObject = (event) => {
       const customEvent = event as CustomEvent<CameraEventDetail>;
+      // Check if the event is for this camera
       if (customEvent.detail.cameraId === camera.id) {
+        // Set latest alert state
         setLatestAlert({
           eventType: customEvent.detail.eventType,
           detectedAt: new Date(customEvent.detail.detectedAt),
@@ -31,19 +38,23 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
       }
     };
 
+    // Add event listener
     cameraEventSystem.addEventListener('cameraEvent', handleCameraEvent);
 
+    // Clean up event listener on unmount
     return () => {
       cameraEventSystem.removeEventListener('cameraEvent', handleCameraEvent);
     };
-  }, [camera.id]);
+  }, [camera.id]); // Depend on camera id
 
+  // UseEffect to simulate detection if the camera is online
   useEffect(() => {
     if (camera.status === "ONLINE") {
       simulateDetection(camera.id);
     }
-  }, [camera.id, camera.status]);
+  }, [camera.id, camera.status]); // Depend on camera id and status
 
+  // Handlers for opening and closing modals
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -60,6 +71,7 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
     setIsAlertModalOpen(false);
   };
 
+  // Render the component
   return (
     <div className="bg-white rounded-lg shadow-md p-4 mb-4 overflow-hidden">
       <h2 className="text-lg font-medium mb-2">{camera.name}</h2>
@@ -75,6 +87,7 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
           </button>
         )}
       </div>
+      // Render modals based on modal state
       {isModalOpen && (
         <CameraModal videoUrl={videoUrl} onClose={handleCloseModal} />
       )}
