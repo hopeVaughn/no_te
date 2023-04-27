@@ -17,11 +17,11 @@ const AlertModal: React.FC<AlertModalProps> = ({ camera, onClose }) => {
   const fetchAlertsData = async () => {
     const alertsData = await fetchAlerts(camera.id);
     setAlerts(alertsData);
+    console.log('fetched alerts:', alerts);
   };
 
   useEffect(() => {
     fetchAlertsData();
-    console.log('fetched alerts:', alerts);
   }, [camera.id]);
 
   useEffect(() => {
