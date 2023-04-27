@@ -1,38 +1,44 @@
 import React, { useEffect, useRef } from 'react';
 
+// Defining the properties for the CameraModal component
 interface CameraModalProps {
-  videoUrl: string;
-  onClose: () => void;
+  videoUrl: string; // URL of the video to be displayed
+  onClose: () => void; // Function to close the modal
 }
 
+// Definition of the CameraModal component
 const CameraModal: React.FC<CameraModalProps> = ({ videoUrl, onClose }) => {
-  const outerDivRef = useRef<HTMLDivElement>(null);
+  const outerDivRef = useRef<HTMLDivElement>(null); // Reference to the outermost div to detect clicks outside the modal
 
   useEffect(() => {
+    // Function to handle the 'Escape' key press
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
       }
     };
 
+    // Function to handle clicks outside the modal
     const handleClickOutside = (event: MouseEvent) => {
       if (event.target === outerDivRef.current) {
         onClose();
       }
     };
 
+    // Add event listeners for key presses and mouse clicks
     window.addEventListener('keydown', handleKeyDown);
     if (outerDivRef.current) {
       outerDivRef.current.addEventListener('click', handleClickOutside);
     }
 
+    // Cleanup function to remove event listeners when the component unmounts
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       if (outerDivRef.current) {
         outerDivRef.current.removeEventListener('click', handleClickOutside);
       }
     };
-  }, [onClose]);
+  }, [onClose]); // Re-run the effect when onClose changes
 
   return (
     <div

@@ -11,11 +11,11 @@ interface CameraEventDetail {
 }
 
 const Dashboard: React.FC<UserPropsWithLogout> = ({ handleLogout }) => {
+  // UseEffect hook to handle camera event system
   useEffect(() => {
     function handleCameraEvent(event: Event) {
       const customEvent = event as CustomEvent<CameraEventDetail>;
       const detail = customEvent.detail;
-      console.log(`Camera ${detail.cameraId} detected ${detail.eventType}`);
       // Update the UI or display an alert accordingly
     }
 
@@ -31,11 +31,10 @@ const Dashboard: React.FC<UserPropsWithLogout> = ({ handleLogout }) => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const user = JSON.parse(storedUser);
-      // console.log(user.username);
     }
   }, []);
 
-  // Render the component UI
+
   return (
     <div className="h-full bg-transparent min-h-screen flex flex-col">
       <nav className="bg-gray-800 text-white p-4 flex justify-between items-center">

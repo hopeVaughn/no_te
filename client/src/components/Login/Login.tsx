@@ -2,20 +2,25 @@ import React, { useState } from 'react';
 import { authenticate } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
 
+// Prop type definition for the LoginForm component
 interface Props {
   handleLogin: (response: any) => void;
 }
 
+// Interface for the input fields in the form
 interface InputField {
   label: string;
   type: string;
   name: string;
 }
 
+
+// Interface for the form fields, extending InputField and adding value
 interface FormField extends InputField {
   value: string;
 }
 
+// Enum for the form modes (SignIn, SignUp)
 enum FormMode {
   SignIn,
   SignUp,
@@ -32,6 +37,7 @@ const LoginForm: React.FC<Props> = ({ handleLogin }) => {
   ]);
   const navigate = useNavigate();
 
+  // Form submission handler
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -57,6 +63,7 @@ const LoginForm: React.FC<Props> = ({ handleLogin }) => {
     }
   };
 
+  // Handler for change in input field
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
@@ -65,12 +72,14 @@ const LoginForm: React.FC<Props> = ({ handleLogin }) => {
     );
   };
 
+  // Function to toggle between SignIn and SignUp modes
   const toggleFormMode = () => {
     setFormMode(mode =>
       mode === FormMode.SignIn ? FormMode.SignUp : FormMode.SignIn
     );
   };
 
+  // Fields for SignUp mode
   const signInInputs: InputField[] = [
     { label: 'Username', type: 'text', name: 'username' },
     { label: 'Password', type: 'password', name: 'password' },
@@ -84,6 +93,7 @@ const LoginForm: React.FC<Props> = ({ handleLogin }) => {
     })),
   ];
 
+  // Decide which set of fields to display based on form mode
   const inputs = formMode === FormMode.SignIn ? signInInputs : signUpInputs;
   return (
     <div className="font-sans max-w-md mx-auto rounded-lg overflow-hidden bg-opacity-75 backdrop-filter backdrop-blur-md backdrop-saturate-150" style={{ fontFamily: 'Roboto', backgroundImage: 'linear-gradient(to bottom right, #050505, #cccccc)' }}>

@@ -2,42 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { Alert, Camera, User } from '../../types';
 import { updateAlert, fetchAlerts } from '../../services/alert';
 
+// Defining the properties for the AlertModal component
 interface AlertModalProps {
   camera: Camera;
   onClose: () => void;
 }
+
+// Defining a new interface for alerts with acknowledgedBy field
 export interface AlertWithAcknowledgedBy extends Alert {
   acknowledgedBy?: User;
 }
+
+// Definition of the AlertModal component
 const AlertModal: React.FC<AlertModalProps> = ({ camera, onClose }) => {
   const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null);
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const userId = JSON.parse(localStorage.getItem('user') || '').id;
 
+  // Function to fetch alert data for the given camera
   const fetchAlertsData = async () => {
     const alertsData = await fetchAlerts(camera.id);
     setAlerts(alertsData);
     console.log('fetched alerts:', alerts);
   };
 
+  // useEffect hook to fetch alerts when the camera id changes
   useEffect(() => {
     fetchAlertsData();
   }, [camera.id]);
 
+  // useEffect hook to reset selected alert when the modal is closed
   useEffect(() => {
-    // Reset the selected alert when the modal is closed
     if (!selectedAlert) {
       setSelectedAlert(null);
     }
   }, [selectedAlert]);
 
+  // Function to handle acknowledgement of an alert
   const handleAcknowledged = async (alert: Alert) => {
-    // Update the alert as acknowledged
     await updateAlert(alert.id, { acknowledged: true }, userId);
-    // Remove the acknowledged alert from the state
     setSelectedAlert(null);
     setAlerts(alerts.filter((a) => a.id !== alert.id));
   };
+
 
   return (
     <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
