@@ -14,17 +14,18 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 - [Contributing](#contributing)
 - [License](#license)
 
-## `Features`
+## Features
 
 1. Login functionality with user
-2. Allow operators to view simulated past footage from each camera
-3. Alert operators when a camera goes offline or detects simulated motion or sound
-4. Design and implement a responsive UI that works well on both desktop and mobile devices
+2. Allow operators to view simulated camera alerts
+3. Allows users to acknowledge alerts
+4. Updates database responsively with user's/camera's id 
+4. Designed and implemented with a responsive UI that works well on both desktop and mobile devices
 
 
-## Database Design Concept
+## Database Design Concept <sup><sub>[top](#table-of-contents)</sub></sup>
 
-### `Key Entities` 
+### Key Entities 
 
 1. Users
 2. Cameras
@@ -62,21 +63,25 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 * acknowledged_by (Foreign key referencing Users)
 * acknowledged_at (Timestamp)
 
-### `Relationships`
+### Relationships <sup><sub>[top](#table-of-contents)</sub></sup>
 
 * One Camera can have many Alerts (One-to-Many relationship between Cameras and Alerts)
 
 * One User can acknowledge many Alerts (One-to-Many relationship between Users and Alerts)
 
-## `Requirements`
+## Requirements <sup><sub>[top](#table-of-contents)</sub></sup>
 
 1. Node.js v18.0.0 or later
 2. PostgreSQL v14.0 or later
 3. Prisma v4.11.0 or later
 
-## `Getting Started`
+## Getting Started <sup><sub>[top](#table-of-contents)</sub></sup>
 
 To set up the project locally, follow these steps:
+
+You will need to have a instance of a `PostgreSQL database server` running locally and the `psql` command line client. Follow the instructions found [here](https://www.prisma.io/dataguide/postgresql/setting-up-a-local-postgresql-database)
+
+Afterwards you can:
 
 1. Clone the repository:
   
@@ -95,6 +100,8 @@ To set up the project locally, follow these steps:
 4. Apply database migrations:
   
   - npx prisma migrate dev
+      
+      This should run the seed script to populate the database with 12 unique camera's.
 
 5. Start the server:
   
