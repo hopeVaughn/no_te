@@ -13,7 +13,7 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 
 ## Features
 
-1. Login functionality with user
+1. Login functionality with user sign up and JWT authentication
 2. Allow operators to view simulated camera alerts
 3. Allows users to acknowledge alerts
 4. Updates database responsively with user's/camera's id 
