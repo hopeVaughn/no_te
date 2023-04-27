@@ -97,6 +97,8 @@ Afterwards you can:
 
 3. Configure environment variables:
   
+  - Create a `.env` file in the root of the project
+
   - Copy the `.env.example` file to `.env` and update the variables with your own PostgreSQL database credentials and other required settings.
 
 4. Apply database migrations:
