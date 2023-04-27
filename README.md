@@ -180,4 +180,6 @@ The application will be available at `http://localhost:3001`.
 !["Tablet View"](https://github.com/hopeVaughn/no_te/blob/main/05_note.png)
 !["Mobile View"](https://github.com/hopeVaughn/no_te/blob/main/06_note.png)
 !["Mobile Alert View"](https://github.com/hopeVaughn/no_te/blob/main/07_note.png)
-!["Camera Footage](https://user-images.githubusercontent.com/94871427/234921789-223d6ade-3785-4e0f-b5b4-06259d1d5328.mp4)
+
+## Camera Footage
+https://user-images.githubusercontent.com/94871427234921789-223d6ade-3785-4e0f-b5b4-06259d1d5328.mp4
