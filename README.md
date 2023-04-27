@@ -16,6 +16,18 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 
 There is a functionality with this project that will simulate an alert type of either "SOUND" or "MOTION" to any available camera's that have an ONLINE status. This feature will begin to operate continuously starting 30 seconds after rendering the Dashboard after a user logs in. This will continue until the user stops the backend server from running. `PLEASE BE ADVISED` that this will continue to populate alerts in the database until the backend process is completely shut down.
 
+
+The server is also set up to have a proxy for the front end. This functionality can be found in the root of the project at /src/server.ts.
+
+It will look like:
+```typescript
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
+```
+If you are running the front end on a different port then the one indicated here be sure to update the server code to reflect those changes.
+
 ## Features
 
 1. Login functionality with user sign up and JWT authentication
