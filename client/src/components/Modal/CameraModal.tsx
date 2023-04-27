@@ -48,7 +48,7 @@ const CameraModal: React.FC<CameraModalProps> = ({ videoUrl, onClose }) => {
       <div className="w-full h-full max-w-4xl max-h-screen bg-white rounded-xl p-4 flex justify-center items-center relative">
         <iframe
           className="w-full h-full border-none"
-          src={videoUrl}
+          src={`${videoUrl}?autoplay=1`}
           title="Video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
