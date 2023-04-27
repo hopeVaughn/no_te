@@ -4,15 +4,16 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 
 ## Table of Contents
 
+- [Special Note](#special-note)
 - [Features](#features)
 - [Database Design Concept](#database-design-concept)
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
 - [Running Tests](#running-tests)
 - [Built With](#built-with)
+- [Final Product](#final-product)
 
-
-# Special Note:
+## Special Note:
 
 There is a functionality with this project that will simulate an alert type of either "SOUND" or "MOTION" to any available camera's that have an ONLINE status. This feature will begin to operate continuously starting 30 seconds after rendering the Dashboard after a user logs in. This will continue until the user stops the backend server from running. `PLEASE BE ADVISED` that this will continue to populate alerts in the database until the backend process is completely shut down.
 
@@ -28,7 +29,8 @@ app.use(cors({
 ```
 If you are running the front end on a different port then the one indicated here be sure to update the server code to reflect those changes.
 
-## Features
+## Features 
+<sup><sub>[top](#table-of-contents)</sub></sup>
 
 1. Login functionality with user sign up and JWT authentication
 2. Allow operators to view simulated camera alerts
@@ -37,7 +39,8 @@ If you are running the front end on a different port then the one indicated here
 4. Designed and implemented with a responsive UI that works well on both desktop and mobile devices
 
 
-## Database Design Concept <sup><sub>[top](#table-of-contents)</sub></sup>
+## Database Design Concept  
+<sup><sub>[top](#table-of-contents)</sub></sup>
 
 ### Key Entities 
 
@@ -77,19 +80,22 @@ If you are running the front end on a different port then the one indicated here
 * acknowledged_by (Foreign key referencing Users)
 * acknowledged_at (Timestamp)
 
-### Relationships <sup><sub>[top](#table-of-contents)</sub></sup>
+### Relationships 
+<sup><sub>[top](#table-of-contents)</sub></sup>
 
 * One Camera can have many Alerts (One-to-Many relationship between Cameras and Alerts)
 
 * One User can acknowledge many Alerts (One-to-Many relationship between Users and Alerts)
 
-## Requirements <sup><sub>[top](#table-of-contents)</sub></sup>
+## Requirements 
+<sup><sub>[top](#table-of-contents)</sub></sup>
 
 1. Node.js v18.0.0 or later
 2. PostgreSQL v14.0 or later
 3. Prisma v4.11.0 or later
 
-## Getting Started <sup><sub>[top](#table-of-contents)</sub></sup>
+## Getting Started 
+<sup><sub>[top](#table-of-contents)</sub></sup>
 
 To set up the project locally, follow these steps:
 
@@ -143,13 +149,15 @@ Afterwards you can:
 
 The application will be available at `http://localhost:3001`.
 
-## Running Tests <sup><sub>[top](#table-of-contents)</sub></sup>
+## Running Tests 
+<sup><sub>[top](#table-of-contents)</sub></sup>
 
   * Currently there are only test for the back end. To run the tests for the backend, run the following command in the project root:
 
   - npm test
 
-## Built With <sup><sub>[top](#table-of-contents)</sub></sup>
+## Built With 
+<sup><sub>[top](#table-of-contents)</sub></sup>
 
 - [Node.js](https://nodejs.org/) - Backend runtime
 - [Express](https://expressjs.com/) - Backend web framework
@@ -160,3 +168,14 @@ The application will be available at `http://localhost:3001`.
 - [Tailwind CSS](https://tailwindcss.com/) - CSS framework
 
 
+## Final Product 
+<sup><sub>[top](#table-of-contents)</sub></sup>
+
+!["landing Page/signin"](https://github.com/hopeVaughn/no_te/blob/main/01_note.png)
+!["landing Page/signup"](https://github.com/hopeVaughn/no_te/blob/main/02_note.png)
+!["Dashboard"](https://github.com/hopeVaughn/no_te/blob/main/03_note.png)
+!["Tablet View"](https://github.com/hopeVaughn/no_te/blob/main/04_note.png)
+!["Tablet View"](https://github.com/hopeVaughn/no_te/blob/main/05_note.png)
+!["Mobile View"](https://github.com/hopeVaughn/no_te/blob/main/06_note.png)
+!["Mobile Alert View"](https://github.com/hopeVaughn/no_te/blob/main/07_note.png)
+!["View Camera Demo"](https://github.com/hopeVaughn/no_te/blob/main/cameraFeed.mp4)
