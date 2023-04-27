@@ -103,7 +103,7 @@ Afterwards you can:
 
 4. Apply database migrations:
   
-  - npm prisma generate
+  - npx prisma generate
 
   - npx prisma migrate dev
 
