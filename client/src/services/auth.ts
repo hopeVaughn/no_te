@@ -1,6 +1,7 @@
 import apiClient from './apiClient';
 import { setCookie } from '../utils/cookie';
 
+// Authentication function for confirming user is permitted 
 export const authenticate = async (
   endpoint: string,
   data: Record<string, string>

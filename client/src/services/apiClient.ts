@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getCookie } from '../utils/cookie';
 
+// Generic api call variable
 const apiClient = axios.create({
   baseURL: 'http://localhost:3001',
   headers: {

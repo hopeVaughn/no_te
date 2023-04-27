@@ -25,6 +25,7 @@ apiClient.interceptors.request.use(config => {
   return config;
 });
 
+// Simulates Camera Alerts
 export async function simulateDetection(cameraId: string) {
   const randomInterval = Math.floor(Math.random() * 10000) + 30000;
 
