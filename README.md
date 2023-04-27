@@ -33,9 +33,9 @@ There is a functionality with this project that will simulate an alert type of e
 2. Cameras
 3. Alerts
 
-### `Attributes and Relationships`
+### Attributes and Relationships
 
-1. `Users`:
+1. Users:
 
 * id (Primary key)
 * username (Unique)
@@ -45,7 +45,7 @@ There is a functionality with this project that will simulate an alert type of e
 * last_name
 * role (Admin, Operator)
 
-1. `Cameras`:
+1. Cameras:
 
 * id (Primary key)
 * name (Unique)
@@ -55,7 +55,7 @@ There is a functionality with this project that will simulate an alert type of e
 * created_at (Timestamp)
 * updated_at (Timestamp)
 
-3. `Alerts`:
+3. Alerts:
 
 * id (Primary key)
 * camera_id (Foreign key referencing Cameras)
