@@ -99,6 +99,8 @@ Afterwards you can:
   - npm prisma generate
 
   - npx prisma migrate dev
+
+  - npx prisma seed
       
       This should run the seed script to populate the database with 12 unique camera's.
 
