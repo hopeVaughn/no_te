@@ -11,6 +11,10 @@ Networked Observation & Tracking Environment (N.O.T.E) is a web application for 
 - [Running Tests](#running-tests)
 - [Built With](#built-with)
 
+
+# Special Note:
+
+There is a functionality with this project that will simulate and alert type of either "SOUND" or "MOTION" to any available camera's that have an ONLINE status. This feature will operate continuously after a user logs in starting about 30 seconds after rendering the Dashboard. This will continue until the user stops the backend server from running. `PLEASE BE ADVISED` that this will continue to populate alerts in the database.
 ## Features
 
 1. Login functionality with user sign up and JWT authentication
