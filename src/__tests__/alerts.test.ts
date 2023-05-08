@@ -1,8 +1,7 @@
-import request from 'supertest';
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../db';
 import { processCameraAlert } from '../handlers/alerts';
-import { CameraAlert } from '../handlers/alerts'
+import { CameraAlert } from '../handlers/alerts';
 import { CameraStatus } from '@prisma/client';
 
 // Tests for the processCameraAlert handler function
