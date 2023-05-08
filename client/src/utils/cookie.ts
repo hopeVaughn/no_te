@@ -1,4 +1,4 @@
-// These are utility functions that can be used for managing cookies in a web application. The setCookie function sets a cookie with a given name, value, and expiration period (in days), while the getCookie function retrieves the value of a cookie with a given name. If the cookie does not exist, getCookie returns null.
+// These are utility functions that can be used for managing cookies in the web application. The setCookie function sets a cookie with a given name, value, and expiration period (in days), while the getCookie function retrieves the value of a cookie with a given name. If the cookie does not exist, getCookie returns null.
 
 export function setCookie(name: string, value: string, days: number) {
   let expires = '';
